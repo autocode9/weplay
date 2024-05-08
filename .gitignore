@@ -27,3 +27,6 @@ replay_pid*
 .classpath
 .project
 .springBeans
+
+# root-context
+root-context

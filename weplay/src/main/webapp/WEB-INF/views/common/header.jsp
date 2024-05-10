@@ -51,7 +51,8 @@
     <div id="header">
         <div id="header-btn-area">
             <a href="">로그인</a> | <a href="">회원가입</a>
-            <!--<a href="">마이페이지</a> | <a href="">경기장 예약 내역</a>-->
+            <!--<a href="">마이페이지</a> | <a href="">경기장 대여 내역</a>-->
+            
         </div>
 
         <h1><a href="">WEPLAY</a></h1>

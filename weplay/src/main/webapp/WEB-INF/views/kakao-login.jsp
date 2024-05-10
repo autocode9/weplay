@@ -164,9 +164,7 @@ body {
 
 	<!--비로그인시  -->
 	<c:if test="${empty loginUser}">
-		<a id="kakao-login-btn"><img src="resources/images/kakao_btn.png" />
-
-		</a>
+		<a id="kakao-login-btn"><img src="resources/images/kakao_btn.png" />	</a>
 	</c:if>
 
 	</div>

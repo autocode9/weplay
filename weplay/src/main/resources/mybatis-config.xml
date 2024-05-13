@@ -10,7 +10,7 @@
 	</settings>
 
 	<typeAliases>
-		<typeAlias type="com.remake.weplay.commons.model.vo.City" alias="city"/>
+		<typeAlias type="com.remake.weplay.city.model.vo.City" alias="city"/>
 	</typeAliases>
 
 	<mappers>

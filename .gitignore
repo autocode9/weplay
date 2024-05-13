@@ -31,3 +31,7 @@ replay_pid*
 # root-context
 root-context
 /.metadata/
+weplay/.settings/org.eclipse.jdt.core.prefs
+weplay/.settings/org.eclipse.jdt.core.prefs
+weplay/.settings/org.eclipse.wst.common.component
+weplay/src/main/webapp/WEB-INF/views/www.jsp

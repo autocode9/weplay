@@ -8,4 +8,6 @@ public interface CityService {
 	
 	List<City> selectCities();
 
+	List<City> selectDistricts(String city);
+
 }

@@ -2,6 +2,7 @@ package com.remake.weplay.city.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,5 +22,9 @@ public class AjaxCityController {
 	public String selectCities() {
 		return gson.toJson(cityService.selectCities());
 	}
-
+	
+	@GetMapping("/{city}")
+	public String selectDistricts(@PathVariable("city") String city) {
+		return gson.toJson(cityService.selectDistricts(city));
+	}
 }

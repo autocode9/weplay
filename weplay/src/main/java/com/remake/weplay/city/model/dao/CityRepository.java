@@ -14,4 +14,8 @@ public class CityRepository {
 		return sqlSession.selectList("cityMapper.selectCities");
 	}
 
+	public List<City> selectDistricts(SqlSessionTemplate sqlSession, String city) {
+		return sqlSession.selectList("cityMapper.selectDistricts", city);
+	}
+
 }

@@ -68,7 +68,7 @@
             <b>지역 : </b>
             <label for="sido">시도:</label>
             <select id="sido">
-                <option value="all" selected>전체</option>
+				<option value="all" selected>전체</option>
             </select>
             <label for="sigungu">시군구:</label>
             <select id="sigungu">
@@ -125,24 +125,68 @@
     </div> <!-- #outer -->
     
     <script>
+    	const optionAll = '<option value="all" selected>전체</option>';
+    	
     	$(() => {
-    		selectLocation();
+    		selectCities();
+    		selectTeams();
+    		
+    		// 시도 선택시 시도에 맞는 시군구를 가져옴
+    		$('#sido').change(() => { 
+    			if($('#sido').val() != 'all' && $('#sido').val() != '세종'){
+    				selectDistricts();
+    			}
+    			else{
+    				$('#sigungu').html(optionAll);
+    			}
+    			selectTeams();
+    		});
+    		
     	});
     	
-    	function selectLocation(){ // 지역 셀렉트 박스 조회
+    	
+    	
+    	function selectCities(){ // 시도 셀렉트 옵션 조회
     		$.ajax({
     			url : 'city',
     			type : 'get',
-    			success : (location) => {
-    				console.log(location);
+    			success : city => {
+    				let options = optionAll;
+    				for(let i in city){
+    					options += '<option value="' + city[i].sido + '">' + city[i].sido + '</option>';
+    				}
+    				$('#sido').html(options);
+    			}
+    		});
+    	} // selectLocation() End
+    	
+    	function selectDistricts(){ //시군구 셀렉트 옵션 조회
+    		$.ajax({
+    			url : 'city/' + $('#sido').val(),
+    			type : 'get',
+    			success : district => {
+    				let options = optionAll;
+    				for(let i in district){
+    					options += '<option value"' + district[i].sigungu + '">' + district[i].sigungu + '</option>';
+    				}
+    				$('#sigungu').html(options);
     			}
     			
     		});
-    		
     	}
     	
     	function selectTeams(){ // 팀 목록 조회
-    		
+    		$.ajax({
+    			url : 'teams',
+    			type : 'get',
+    			data : {
+    				sido : $('#sido').val(),
+    				sigungu : $('#sigungu').val()
+    			},
+    			success : teams => {
+    				console.log(teams);
+    			}
+    		});
     		
     	}
     

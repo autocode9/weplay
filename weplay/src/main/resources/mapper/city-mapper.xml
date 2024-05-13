@@ -8,5 +8,8 @@
 		SELECT SIDO FROM CITY
 	</select>
 	
+	<select id="selectDistricts" parameterType="string" resultType="city">
+		SELECT SIGUNGU FROM CITY_DISTRICT WHERE SIDO = #{city}
+	</select>
 
 </mapper>

@@ -12,11 +12,12 @@
 		 WHERE
 		       STATUS = 'Y'
 	</select>
-	<!--  
+ 	
+ 	<!--  
 	<select id="selectTeams" parameterType="city" resultType="team">
 		SELECT
-		       TEAM_NO,
-		       TEAM_NAME,
+		       TEAM_NO AS teamNo,
+		       TEAM_NAME AS teamName,
 		       TEAM_TYPE,
 		       LOCATION,
 		       TEAM_SKILL,

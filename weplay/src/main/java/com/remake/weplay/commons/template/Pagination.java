@@ -1,8 +1,8 @@
-package com.remake.weplay.common.template;
+package com.remake.weplay.commons.template;
 
 import org.apache.ibatis.session.RowBounds;
 
-import com.remake.weplay.common.model.vo.PageInfo;
+import com.remake.weplay.commons.model.vo.PageInfo;
 
 public class Pagination {
 	

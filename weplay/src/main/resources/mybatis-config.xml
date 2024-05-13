@@ -9,4 +9,11 @@
 		<setting name="jdbcTypeForNull" value="NULL"/> <!-- 빈문자열을 null로 판단 -->
 	</settings>
 
+	<typeAliases>
+		<typeAlias type="com.remake.weplay.commons.model.vo.City" alias="city"/>
+	</typeAliases>
+
+	<mappers>
+		<mapper resource="/mapper/city-mapper.xml" />
+	</mappers>
 </configuration>

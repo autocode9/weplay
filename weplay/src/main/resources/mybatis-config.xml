@@ -11,9 +11,11 @@
 
 	<typeAliases>
 		<typeAlias type="com.remake.weplay.city.model.vo.City" alias="city"/>
+		<typeAlias type="com.remake.weplay.team.model.vo.Team" alias="team"/>
 	</typeAliases>
 
 	<mappers>
 		<mapper resource="/mapper/city-mapper.xml" />
+		<mapper resource="/mapper/team-mapper.xml" />
 	</mappers>
 </configuration>

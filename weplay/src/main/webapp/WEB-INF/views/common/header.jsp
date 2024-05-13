@@ -16,7 +16,7 @@
         body{ background-color: black; }
         #header{
             width:80%;
-            height:100px;
+            height: 20%;
             padding-top:20px;
             margin:auto;
             >h1{
@@ -38,7 +38,7 @@
         #header-navibar>ul {width:100%; height:100%; list-style-type:none; margin:auto; padding:0;}
         .navi-top {float:left; width:16.66%; height:100%; line-height:55px; text-align:center;}
         .navi-top > a {color:white; font-size:22px; font-weight:900; display: block; width: 100%; height: 100%; transform: scale(1);}
-        #header-navibar {height:75%; border-bottom:1px solid lightgray;}
+        #header-navibar {height:60px; border-bottom:1px solid lightgray; border: 1px solid lightgrey;}
         .navi-in{ list-style-type:none; margin:auto; display: none;}
         .navi-in a{ text-decoration:none; color:white; font-size:18px; font-weight:900; }
         .navi-top > a:hover, .navi-in a:hover{ color: rgb(52, 152, 219); }
@@ -59,7 +59,7 @@
 
         <div id="header-navibar">
             <ul>
-                <li class="navi-top"><a href="">得</a></li>
+                <li class="navi-top"><a href="allTeams">得</a></li>
                 <li class="navi-top"><a href="">識呪</a></li>
                 <li class="navi-top"><a href="">My得</a></li>
                 <li class="navi-top">

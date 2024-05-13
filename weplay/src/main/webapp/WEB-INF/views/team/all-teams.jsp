@@ -18,6 +18,7 @@
             margin: auto;
             padding-bottom: 5%;
             padding-top: 2%;
+            background-color: white;
         }
 
         #search-area, #location-area{
@@ -25,10 +26,16 @@
             text-align: center;
             margin-bottom: 2%;
         }
+        #teams-area{
+        	padding-left: 2%;
+        	padding-right: 2%;
+        }
 
     </style>
 </head>
 <body>
+	
+	<jsp:include page="../common/header.jsp"/>
 
     <div id="outer">
         <div id="search-area">
@@ -70,7 +77,7 @@
             </select>
         </div>
         
-        <div>
+        <div id="teams-area">
             <table class="table table-bordered table-hover">
                 <thead>
                     <tr>
@@ -114,10 +121,27 @@
                 <li class="page-item"><a class="page-link" href="#">Next</a></li>
             </ul>
 
-        </div>
+        </div> <!-- #teams-area -->
 
-
-    </div>
+    </div> <!-- #outer -->
+    
+    <script>
+    	$(() => {
+    		selectLocation();
+    	});
+    	
+    	function selectLocation(){ // 지역 셀렉트 박스 조회
+    		
+    		
+    	}
+    	
+    	function selectTeams(){ // 팀 목록 조회
+    		
+    		
+    	}
+    
+    
+    </script>
     
 </body>
 </html>

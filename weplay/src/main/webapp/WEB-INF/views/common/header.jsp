@@ -1,15 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
     <title>WEPLAY</title>
-    <!-- jQuery ¶óÀÌºê·¯¸® -->
+    <!-- jQuery ë¼ì´ë¸ŒëŸ¬ë¦¬ -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <!-- ºÎÆ®½ºÆ®·¦ ½ºÅ¸ÀÏ -->
+    <!-- ë¶€íŠ¸ìŠ¤íŠ¸ëž© ìŠ¤íƒ€ì¼ -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <!-- ºÎÆ®½ºÆ®·¦ ½ºÅ©¸³Æ® -->
+    <!-- ë¶€íŠ¸ìŠ¤íŠ¸ëž© ìŠ¤í¬ë¦½íŠ¸ -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
     <style>
@@ -50,8 +50,8 @@
     
     <div id="header">
         <div id="header-btn-area">
-            <a href="">·Î±×ÀÎ</a> | <a href="">È¸¿ø°¡ÀÔ</a>
-            <!--<a href="">¸¶ÀÌÆäÀÌÁö</a> | <a href="">°æ±âÀå ´ë¿© ³»¿ª</a>-->
+         <a href="logout.member">ë¡œê·¸ì¸</a>| <a href="enrollForm.member">íšŒì›ê°€ìž…</a>
+            <!--<a href="">ë§ˆì´íŽ˜ì´ì§€</a> | <a href="">ê²½ê¸°ìž¥ ëŒ€ì—¬ ë‚´ì—­</a>-->
             
         </div>
 
@@ -59,30 +59,30 @@
 
         <div id="header-navibar">
             <ul>
-                <li class="navi-top"><a href="">ÆÀ</a></li>
-                <li class="navi-top"><a href="">¼±¼ö</a></li>
-                <li class="navi-top"><a href="">MyÆÀ</a></li>
+                <li class="navi-top"><a href="">íŒ€</a></li>
+                <li class="navi-top"><a href="">ì„ ìˆ˜</a></li>
+                <li class="navi-top"><a href="">MyíŒ€</a></li>
                 <li class="navi-top">
-                    <a href="">°æ±â</a>
+                    <a href="">ê²½ê¸°</a>
                     <ul class="navi-in">
-                        <li><a href="#">ÀüÃ¼ °æ±â</a></li>
-                        <li><a href="#">MyÆÀ °æ±â</a></li>
-                        <li><a href="#">°æ±â ½ÅÃ»</a></li>
-                        <li><a href="#">°æ±â ½ÅÃ» ³»¿ª</a></li>
-                        <li><a href="#">°æ±â ±â·Ï(ÆÀ)</a></li>
-                        <li><a href="#">°æ±â ±â·Ï(°³ÀÎ)</a></li>
+                        <li><a href="#">ì „ì²´ ê²½ê¸°</a></li>
+                        <li><a href="#">MyíŒ€ ê²½ê¸°</a></li>
+                        <li><a href="#">ê²½ê¸° ì‹ ì²­</a></li>
+                        <li><a href="#">ê²½ê¸° ì‹ ì²­ ë‚´ì—­</a></li>
+                        <li><a href="#">ê²½ê¸° ê¸°ë¡(íŒ€)</a></li>
+                        <li><a href="#">ê²½ê¸° ê¸°ë¡(ê°œì¸)</a></li>
                     </ul>
                 </li>
                 <li class="navi-top">
-                    <a href="">Ä¿¹Â´ÏÆ¼</a>
+                    <a href="">ì»¤ë®¤ë‹ˆí‹°</a>
                     <ul class="navi-in">
-                        <li><a href="#">ÀÚÀ¯ °Ô½ÃÆÇ</a></li>
-                        <li><a href="#">°æ±â °Ô½ÃÆÇ</a></li>
-                        <li><a href="#">ÆÀ¿ø ¸ðÁý</a></li>
-                        <li><a href="#">ÆÀ ±¸ÇÔ</a></li>
+                        <li><a href="#">ìžìœ  ê²Œì‹œíŒ</a></li>
+                        <li><a href="#">ê²½ê¸° ê²Œì‹œíŒ</a></li>
+                        <li><a href="#">íŒ€ì› ëª¨ì§‘</a></li>
+                        <li><a href="#">íŒ€ êµ¬í•¨</a></li>
                     </ul>
                 </li class="navi-top">
-                <li class="navi-top"><a href="">°æ±âÀå ¿¹¾à</a></li>
+                <li class="navi-top"><a href="">ê²½ê¸°ìž¥ ì˜ˆì•½</a></li>
             </ul>
         </div>
 

@@ -69,7 +69,6 @@
             <label for="sido">시도:</label>
             <select id="sido">
                 <option value="all" selected>전체</option>
-                <option value="서울">서울</option>
             </select>
             <label for="sigungu">시군구:</label>
             <select id="sigungu">
@@ -131,7 +130,14 @@
     	});
     	
     	function selectLocation(){ // 지역 셀렉트 박스 조회
-    		
+    		$.ajax({
+    			url : 'city',
+    			type : 'get',
+    			success : (location) => {
+    				console.log(location);
+    			}
+    			
+    		});
     		
     	}
     	

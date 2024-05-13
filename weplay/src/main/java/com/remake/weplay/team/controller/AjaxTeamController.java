@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.google.gson.Gson;
 import com.remake.weplay.city.model.vo.City;
 import com.remake.weplay.team.model.service.TeamService;
 
@@ -14,11 +15,12 @@ public class AjaxTeamController {
 	
 	@Autowired
 	private TeamService teamService;
+	@Autowired
+	private Gson gson;
 	
 	@GetMapping
 	public String selectTeams(City city) {
-		System.out.println(city);
-		return "";
+		return gson.toJson(teamService.selectTeams(city));
 	}
 
 }

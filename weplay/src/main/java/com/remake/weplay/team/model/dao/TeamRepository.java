@@ -17,7 +17,8 @@ public class TeamRepository {
 	}
 	
 	public List<Team> selectTeams(SqlSessionTemplate sqlSession, City city, RowBounds rowBounds) {
-		return sqlSession.selectList("teamMapper.selectTeams", city, rowBounds);
+		//return sqlSession.selectList("teamMapper.selectTeams", city, rowBounds);
+		return null;
 	}
 
 }

@@ -116,7 +116,13 @@
                 <li class="page-item"><a class="page-link" href="#">Previous</a></li>
                 <li class="page-item active"><a class="page-link" href="#">1</a></li>
                 <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item"><a class="page-link" href="#">4</a></li>
+                <li class="page-item"><a class="page-link" href="#">5</a></li>
+                <li class="page-item"><a class="page-link" href="#">6</a></li>
+                <li class="page-item"><a class="page-link" href="#">7</a></li>
+                <li class="page-item"><a class="page-link" href="#">8</a></li>
+                <li class="page-item"><a class="page-link" href="#">9</a></li>
+                <li class="page-item"><a class="page-link" href="#">10</a></li>
                 <li class="page-item"><a class="page-link" href="#">Next</a></li>
             </ul>
 
@@ -126,10 +132,10 @@
     
     <script>
     	const optionAll = '<option value="all" selected>전체</option>';
-    	
+    	let page = 1;
     	$(() => {
     		selectCities();
-    		selectTeams();
+    		selectTeams(page);
     		
     		// 시도 선택시 시도에 맞는 시군구를 가져옴
     		$('#sido').change(() => { 
@@ -175,9 +181,9 @@
     		});
     	}
     	
-    	function selectTeams(){ // 팀 목록 조회
+    	function selectTeams(page){ // 팀 목록 조회
     		$.ajax({
-    			url : 'teams',
+    			url : 'teams/' + page,
     			type : 'get',
     			data : {
     				sido : $('#sido').val(),

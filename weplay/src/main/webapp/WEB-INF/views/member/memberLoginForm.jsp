@@ -6,17 +6,28 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style>
+   #login-form{
+		background-color: cyan;
+		 padding-top: 10px;
+		 top: 40%;
+		 width:80%;
+		 margin:auto;
+		 margin-top : 20%;
+	}
+</style>
 </head>
 <body>
 
 	<jsp:include page="../common/header.jsp" />
 
-
-	<div id="">
+	<!-- 
+	<div id="login ">
 		<p>로그인
 		<p>
 	</div>
-
+ 	-->
+ 	
 	<form id="login-form" action="insert.member" method="post">
 		<table align="center">
 			<tr>

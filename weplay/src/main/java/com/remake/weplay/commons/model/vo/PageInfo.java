@@ -1,4 +1,4 @@
-package com.remake.weplay.common.model.vo;
+package com.remake.weplay.commons.model.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

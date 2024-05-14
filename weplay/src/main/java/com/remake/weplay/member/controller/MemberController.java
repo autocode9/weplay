@@ -34,7 +34,6 @@ public class MemberController {
 		if(loginUser != null && bcryptPasswordEncoder.matches(member.getUserPwd(), loginUser.getUserPwd())) {
 			session.setAttribute("loginUser", loginUser);
 			
-			System.out.println("dfs"+loginUser);
 			mv.setViewName("main");
 		} else {
 			// model.addAttribute

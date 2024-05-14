@@ -1,9 +1,11 @@
 package com.remake.weplay.member.model.dao;
 
 import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.stereotype.Repository;
 
 import com.remake.weplay.member.model.vo.Member;
 
+@Repository
 public class MemberRepository {
 
 

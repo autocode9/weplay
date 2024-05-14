@@ -41,13 +41,13 @@
 		               WIN DESC, DRAW DESC, LOSE, TEAM_SKILL)
 		 <choose>
 		 
-		 <when test="city.sido != 'all' && city.sigungu != 'all'">
+		 <when test="city.sido != 'all' and city.sigungu != 'all'">
 		 WHERE
-		 	   location IS #{sido} || ' ' || #{sigungu}
+		 	   location = '#{sido + " " + sigungu}'
 		 </when>
-		 <when test="city.sido != 'all' && city.sigungu == 'all'">
+		 <when test="city.sido != 'all' and city.sigungu == 'all'">
 		 WHERE
-		       location LIKE '%' || #{sido}|| '%'
+		       location LIKE '%' || #{sido} || '%'
 		 </when>
 		 </choose>
 	</select>

@@ -1,17 +1,17 @@
 package com.remake.weplay.team.model.service;
 
-import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.RowBounds;
 
+import com.remake.weplay.city.model.vo.City;
 import com.remake.weplay.team.model.vo.Team;
 
 public interface TeamService {
 
-	int countTeams(HashMap<String, String> map);
+	int countTeams();
 	
-	List<Team> selectTeams(HashMap<String, String> map, RowBounds rowBounds);
+	List<Team> selectTeams(City city, RowBounds rowBounds);
 
 
 }

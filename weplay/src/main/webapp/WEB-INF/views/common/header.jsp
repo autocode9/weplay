@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,6 +15,9 @@
 <!-- 부트스트랩 스크립트 -->
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script
+	src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
 
 <style>
 body {
@@ -102,6 +105,7 @@ body {
 </head>
 <body>
 
+
 	<div id="header">
 		<div id="header-btn-area">
 
@@ -110,8 +114,10 @@ body {
 					<!-- 로그인 전 -->
 					<a href="loginForm.member">로그인</a>| <a href="enrollForm.member">회원가입</a>
 				</c:when>
-				<c:otherwise>	
-					<a href="">마이페이지</a> | <a href="">경기장 대여 내역</a> | <a href="logout.member">로그아웃
+				<c:otherwise>
+				<label >${ loginUser.nickName }님 환영합니다</label>
+					<a href="">마이페이지</a> | <a href="">경기장 대여 내역</a> | <a
+						href="logout.member">로그아웃 
 				</c:otherwise>
 			</c:choose>
 		</div>

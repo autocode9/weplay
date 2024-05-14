@@ -71,15 +71,17 @@
 		UPDATE
 		       MEMBER
 		   SET
-		       USER_NAME = #{userName},
-		       EMAIL = #{email},
-		       GENDER = #{gender},
+		       NICKNAME = #{nickName},
 		       AGE = #{age},
 		       PHONE = #{phone},
 		       ADDRESS = #{address},
-		       MODIFY_DATE = SYSDATE
+		       INFO=#{info},
+		       SKILL=#{skill},
+		       POSITION=#{position},
+		       SUB_POSITION=#{subPosition},
+		       UPDATE_DATE = SYSDATE
 		 WHERE
-			   USER_ID = #{userId}
+			   MEMBER_ID = #{userId}
 	</update>
 	
 	<update id="delete" parameterType="member">
@@ -89,7 +91,7 @@
 		       STATUS = 'N',
 		       MODIFY_DATE = SYSDATE
 		 WHERE
-		       USER_ID = #{userId}
+		       MEMBER_ID = #{userId}
 	</update>
 	
 	<!-- 아이디 중복 체크용 쿼리문 -->

@@ -116,7 +116,7 @@ body {
 				</c:when>
 				<c:otherwise>
 				<label >${ loginUser.nickName }님 환영합니다</label>
-					<a href="">마이페이지</a> | <a href="">경기장 대여 내역</a> | <a
+					<a href="mypage.member">마이페이지</a> | <a href="">경기장 대여 내역</a> | <a
 						href="logout.member">로그아웃 
 				</c:otherwise>
 			</c:choose>

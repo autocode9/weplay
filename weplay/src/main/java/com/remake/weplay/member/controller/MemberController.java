@@ -43,7 +43,33 @@ public class MemberController {
 		}
 		return mv;
 	}
-	
+	/***
+	 * 마이페이지
+	 * @return
+	 */
+	@RequestMapping("mypage.member")
+	public String myPage() {
+		// /WEB-INF/views/member/myPage.jsp
+		return "member/myPage";
+	}
+	/***
+	 * 수정
+	 * @param member
+	 * @param mv
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping("update.member")
+	public ModelAndView handleUpdateRequest(/*@ModelAttribute*/ Member member, ModelAndView mv, HttpSession session) {
+		if(memberService.update(member) > 0) {
+			session.setAttribute("alertMsg", "정보 수정 성공");
+			session.setAttribute("loginUser", memberService.login(member));
+			mv.setViewName("redirect:mypage.member");
+		} else {
+			mv.addObject("errorMsg", "정보 수정 실패..").setViewName("common/errorPage");
+		}
+		return mv;
+	}
 	/***
 	 * 로그아웃
 	 * @param session
@@ -93,5 +119,23 @@ public class MemberController {
 			mv.addObject("errorMsg", "회원가입 실패..").setViewName("common/errorPage");
 		}
 		return mv;
+	}
+	/****
+	 * 삭제
+	 * @param userPwd
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping("delete.member")
+	public String delete(String userPwd, HttpSession session) {
+		Member loginUser = (Member)session.getAttribute("loginUser");
+		if (bcryptPasswordEncoder.matches(userPwd, loginUser.getUserPwd()) && memberService.delete(loginUser) > 0) {
+			session.removeAttribute("loginUser");
+			session.setAttribute("alertMsg", "회원 탈퇴 성공");
+			return "redirect:/";
+		} else {
+			session.setAttribute("alertMsg", "회원 탈퇴 실패..");
+			return "redirect:mypage.member";
+		}
 	}
 }

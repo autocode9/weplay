@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>로그인페이지</title>
 <style>
    #login-form{
 		background-color: cyan;
@@ -28,7 +28,7 @@
 	</div>
  	-->
  	
-	<form id="login-form" action="insert.member" method="post">
+	<form id="login-form" action="login.member" method="post">
 		<table align="center">
 			<tr>
 				<th>아이디</th>

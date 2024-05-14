@@ -11,5 +11,19 @@ import lombok.ToString;
 @ToString
 public class Team {
 	
+	int teamRank;
+	int teamNo;
+	String teamName;
+	String teamType;
+	String location;
+	String teamInfo;
+	String teamSkill;
+	String avgAge;
+	String uniform;
+	String fdYear;
+	String createDate;
+	String updateDate;
+	String status;
+	String teamRecord;
 
 }

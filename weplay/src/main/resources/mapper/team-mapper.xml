@@ -13,17 +13,43 @@
 		       STATUS = 'Y'
 	</select>
  	
- 	<!--  
+ 	
 	<select id="selectTeams" parameterType="city" resultType="team">
-		SELECT
-		       TEAM_NO AS teamNo,
-		       TEAM_NAME AS teamName,
-		       TEAM_TYPE,
-		       LOCATION,
-		       TEAM_SKILL,
-		       AVG_AGE,
-		       WIN || '승 ' || DRAW || '무 ' || LOSE || '패' AS teamRecord
-		       
+		SELECT 
+		       teamRank,
+		       teamNo,
+		       teamType,
+		       location,
+		       teamSkill,
+		       avgAge,
+		       teamRecord
+		  FROM
+		       (SELECT
+		               DENSE_RANK() OVER(ORDER BY WIN DESC, DRAW DESC, LOSE, TEAM_SKILL) AS teamRank,
+				       TEAM_NO AS teamNo,
+				       TEAM_NAME AS teamName,
+				       TEAM_TYPE AS teamType,
+				       LOCATION AS location,
+				       TEAM_SKILL AS teamSkill,
+				       AVG_AGE AS avgAge,
+				       WIN || '승 ' || DRAW || '무 ' || LOSE || '패' AS teamRecord
+		          FROM
+		               TEAM
+		
+		         ORDER 
+		            BY
+		               WIN DESC, DRAW DESC, LOSE, TEAM_SKILL)
+		 <choose>
+		 
+		 <when test="city.sido != 'all' && city.sigungu != 'all'">
+		 WHERE
+		 	   location IS #{sido} || ' ' || #{sigungu}
+		 </when>
+		 <when test="city.sido != 'all' && city.sigungu == 'all'">
+		 WHERE
+		       location LIKE '%' || #{sido}|| '%'
+		 </when>
+		 </choose>
 	</select>
-	-->
+	
 </mapper>

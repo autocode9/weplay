@@ -145,7 +145,7 @@
     			else{
     				$('#sigungu').html(optionAll);
     			}
-    			selectTeams();
+    			selectTeams(page);
     		});
     		
     	});

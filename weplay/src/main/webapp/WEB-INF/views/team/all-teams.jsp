@@ -21,16 +21,28 @@
             background-color: white;
         }
 
-        #search-area, #location-area{
+        #search-area{
             width: 100%;
             text-align: center;
+            margin-top: 2%;
             margin-bottom: 2%;
+        }
+        #result-area{
+        	width: 100%;
+            text-align: right;
+            margin-bottom: 2%;
+            padding-right: 2%;
+        }
+        #sigungu{
+            margin-right: 2%;
         }
         #teams-area{
         	padding-left: 2%;
         	padding-right: 2%;
         }
-
+		.page-link:hover{
+			cursor: pointer;
+		}
     </style>
 </head>
 <body>
@@ -39,32 +51,6 @@
 
     <div id="outer">
         <div id="search-area">
-            <select id="skill">
-                <option disabled selected>실력</option>
-                <option value="상">상</option>
-                <option value="중">중</option>
-                <option value="하">하</option>
-            </select>
-            <select id="avgAge">
-                <option disabled selected>평균 나이</option>
-                <option value="상">상</option>
-                <option value="중">중</option>
-                <option value="하">하</option>
-            </select>
-            <select id="teamType">
-                <option disabled selected>팀 유형</option>
-                <option value="청소년">청소년</option>
-                <option value="대학생">대학생</option>
-                <option value="청년">청년</option>
-                <option value="직장인">직장인</option>
-                <option value="조기축구">조기축구</option>
-                <option value="기타 모임">기타 모임</option>
-            </select>
-            <label for="teamName"></label>
-            <input type="text" id="teamName" placeholder="팀명 검색">
-            <button id="" class="btn btn-sm btn-dark">검색</button>
-        </div>
-        <div id="location-area">
             <b>지역 : </b>
             <label for="sido">시도:</label>
             <select id="sido">
@@ -74,57 +60,34 @@
             <select id="sigungu">
                 <option value="all" selected>전체</option>
             </select>
+            <input type="text" id="keyword" placeholder="팀명 검색">
+            <button id="searchByKeyword" class="btn btn-sm btn-dark">검색</button>
         </div>
-        
+        <div id="result-area">
+            <p></p>
+        </div>
         <div id="teams-area">
             <table class="table table-bordered table-hover">
                 <thead>
                     <tr>
                         <th>순위</th>
                         <th>팀명</th>
+                        <th>팀 유형</th>
                         <th>지역</th>
                         <th>실력</th>
                         <th>팀원수</th>
-                        <th>평균나이</th>
-                        <th>팀 유형</th>
+                        <th>평균 나이</th>
                         <th>전적</th>
                         <th></th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td colspan="9">조회된 팀이 없습니다.</td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td><img width="10%" height="10%" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjq9LJak45k1eZi_TyWyOSy5nU3KetpbfDluj9aty3-1WptLYlvwfZTZIOiaJtf1LPxx0WEsO-XXzOCDlPpY4ymL1Rm8tgdZ1yUOnQbsgUT8Ri1CEA12UGV7lNISQ66dAWvB7QWj0kRlOBa/s1600/3034007-slide-s-3-whats-the-difference-between-a-logo-and-a-symbol.jpg"><span>리메이크 FC</span></td>
-                        <td>서울 종로구</td>
-                        <td>중</td>
-                        <td>15명</td>
-                        <td>20대</td>
-                        <td>청년</td>
-                        <td>2승 0무 1패</td>
-                        <td>
-                            <button class="btn btn-sm btn-success">경기신청</button>
-                            <button class="btn btn-sm btn-primary">가입신청</button>
-                        </td>
-                    </tr>
 
                 </tbody>
             </table>
-            <ul class="pagination justify-content-center">
-                <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">4</a></li>
-                <li class="page-item"><a class="page-link" href="#">5</a></li>
-                <li class="page-item"><a class="page-link" href="#">6</a></li>
-                <li class="page-item"><a class="page-link" href="#">7</a></li>
-                <li class="page-item"><a class="page-link" href="#">8</a></li>
-                <li class="page-item"><a class="page-link" href="#">9</a></li>
-                <li class="page-item"><a class="page-link" href="#">10</a></li>
-                <li class="page-item"><a class="page-link" href="#">Next</a></li>
-            </ul>
+            <div id="page-area">
+            	
+            </div>
 
         </div> <!-- #teams-area -->
 
@@ -147,6 +110,13 @@
     			}
     			selectTeams(page);
     		});
+    		$('#sigungu').change(() => { 
+    			selectTeams(page);
+    		});
+    		
+    		$('#searchByKeyword').click(() => {
+    			selectTeams(page);
+    		})
     		
     	});
     	
@@ -181,22 +151,125 @@
     		});
     	}
     	
-    	function selectTeams(page){ // 팀 목록 조회
+    	function selectTeams(page){ // 팀 목록 조회	
     		$.ajax({
     			url : 'teams/' + page,
     			type : 'get',
     			data : {
     				sido : $('#sido').val(),
-    				sigungu : $('#sigungu').val()
+    				sigungu : $('#sigungu').val(),
+    				keyword : $('#keyword').val()
     			},
-    			success : teams => {
-    				console.log(teams);
+    			success : result => {
+    				const pageInfo = result[0];
+    				const teams = result[1];
+    				
+    				$('#result-area').html(createResultStr(pageInfo.listCount));
+   
+    				if(teams.length == 0){
+    					const teamTrEmpty = '<tr><td colspan="9">조회된 팀이 없습니다.</td></tr>';
+    					$('#teams-area tbody').html(teamTrEmpty);
+    					$('#page-area').html('');
+    				}
+    				else{
+    					$('#teams-area tbody').html('');
+    					for(let i in teams){
+    						const teamTr = createTeamTr(teams[i]);
+    						$('#teams-area tbody').append(teamTr);
+    					}
+    					const pageUl = pagination(pageInfo);
+    					$('#page-area').html(pageUl);
+    					
+    				}
     			}
     		});
-    		
     	}
-    
-    
+    	
+    	function createResultStr(listCount){
+    		const $keyword = $('#keyword').val();
+    		const $sido = $('#sido').val();
+    		const $sigungu = $('#sigungu').val();
+    		
+    		let result = '';
+			if($keyword == ''){
+				result = '조회 결과 : ';
+			}
+			else{
+				result = '<b>' + $keyword + '</b> 검색 결과 : ';
+			}
+			result += '<b>' + listCount + '</b>팀';
+
+			if($sido != 'all' && $sigungu == 'all'){
+				result += '(' + $sido + ')';
+			}
+			else if($sigungu != 'all' && $sigungu != 'all'){
+				result += '(' + $sido + ' ' + $sigungu + ')';
+			}
+			return result;
+    	}
+    	
+    	function createTeamTr(team){ // 팀 테이블 행 생성 메소드
+    		const teamTr = document.createElement('tr');
+    		
+    		const keys = Object.keys(team);
+    			
+    		for (let i in keys) {
+    			const key = keys[i] // 각각의 키
+    			const value = team[key] // 각각의 키에 해당하는 각각의 값
+    			
+    			if(i == 0){ // teamNo => input:hidden
+    				const teamNo = document.createElement("input");
+    				teamNo.setAttribute("type", "hidden");
+    				teamNo.setAttribute("value", value);
+					teamTr.appendChild(teamNo);
+	    		}
+	    		else{
+	    			const td = document.createElement('td');
+	    			td.innerText = value;
+	    			teamTr.appendChild(td);
+    			}
+    		}
+    		const td = document.createElement('td');
+    		td.innerHTML = '<button class="btn btn-sm btn-success apply-match">경기신청</button>'
+    					 + '<button class="btn btn-sm btn-primary apply-join">가입신청</button>';
+    		teamTr.appendChild(td);
+    		
+    		return teamTr;
+    	}
+    	
+    	function pagination(pageInfo){ // 팀 목록 페이징 처리
+    		
+    		const pageUl = document.createElement('ul');
+    		pageUl.setAttribute("class", "pagination justify-content-center");
+    		
+    		const moveLi = document.createElement('li');
+    		moveLi.setAttribute("class", "page-item");
+    		
+    		if(pageInfo.currentPage != 1){
+    			moveLi.innerHTML = '<a class="page-link" onclick="selectTeams(' + (pageInfo.currentPage - 1) + ');">이전</a>';
+	    		pageUl.appendChild(moveLi);
+    		}
+    		
+    		for(let i = 1; i <= pageInfo.endPage; i++){
+	    		
+		    	const pageLi = document.createElement('li');
+    			if(i == pageInfo.currentPage){
+	    			pageLi.setAttribute("class", "page-item active");
+    			}
+    			else{
+    				pageLi.setAttribute("class", "page-item");
+    			}
+	    		pageLi.innerHTML = '<a class="page-link" onclick="selectTeams(' + i + ');">' + i + '</a>';
+	    		pageUl.appendChild(pageLi);
+    		}
+    		
+    		if(pageInfo.maxPage > pageInfo.currentPage){
+    			moveLi.innerHTML = '<a class="page-link" onclick="selectTeams(' + (pageInfo.currentPage + 1) + ');">다음</a>';
+	    		pageUl.appendChild(moveLi);
+    		}
+    		
+    		return pageUl;
+    	}
     </script>
     
 </body>

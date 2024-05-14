@@ -11,13 +11,14 @@ import lombok.ToString;
 @ToString
 public class Team {
 	
-	int teamRank;
 	int teamNo;
+	int teamRank;
 	String teamName;
 	String teamType;
 	String location;
 	String teamInfo;
 	String teamSkill;
+	String teamMembers;
 	String avgAge;
 	String uniform;
 	String fdYear;

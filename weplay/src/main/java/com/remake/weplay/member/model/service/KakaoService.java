@@ -53,7 +53,7 @@ public class KakaoService {
 			responseData +=line;
 		}
 		
-		//System.out.println(responseData);
+		System.out.println(responseData);
 		
 		JSONParser parser = new JSONParser();
 		

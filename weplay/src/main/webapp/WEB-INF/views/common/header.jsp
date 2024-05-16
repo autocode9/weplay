@@ -123,7 +123,7 @@ body {
 		</div>
 
 		<h1>
-			<a href="">WEPLAY</a>
+			<a href="${pageContext.request.contextPath}">WEPLAY</a>
 		</h1>
 
 		<div id="header-navibar">

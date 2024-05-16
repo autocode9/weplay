@@ -6,6 +6,15 @@
 <head>
 <meta charset="UTF-8">
 <title>로그인페이지</title>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<!-- 부트스트랩 스타일 -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<!-- 부트스트랩 스크립트 -->
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 <style>
 #login-form {
 	background-color: cyan;
@@ -16,25 +25,31 @@
 	margin-top: 20%;
 }
 
-.container {
- width:80%;
-            margin: auto;
-            padding-bottom: 5%;
-            padding-top: 2%;
-            background-color: white;
-    overflow: hidden; /* 부모 요소의 높이를 자식 요소에 맞추기 위해 사용 */
+.outer {
+	width: 80%;
+	margin: auto;
+	padding-bottom: 5%;
+	padding-top: 2%;
+	background-color: white;
+	overflow: hidden; /* 부모 요소의 높이를 자식 요소에 맞추기 위해 사용 */
 }
 
 #boardList-area {
-    float: left; /* 왼쪽으로 부유시킴 */
-    width: 30%; /* 전체 너비의 50%를 차지하도록 설정 */
-    /* 원하는 스타일 추가 */
+	float: left;
+	width: 30%;
+	border-right: 1px solid black; /* 세로 줄 스타일 지정 */
+	padding-right: 10px; /* 원하는 간격 조정 */
+	padding-left: 20px;
 }
 
 #reply-area {
-    float: right; /* 오른쪽으로 부유시킴 */
-    width: 70%; /* 전체 너비의 50%를 차지하도록 설정 */
-    /* 원하는 스타일 추가 */
+	float: right;
+	width: 70%;
+}
+
+#teamBoardName {
+	resize: none; /* 사용자가 크기를 조절할 수 없도록 함 */
+	width: 90%;
 }
 </style>
 </head>
@@ -44,10 +59,32 @@
 
 
 	<div class="outer">
+		<!-- 여기는 ajax할필요없음 -->	
 		<div id="boardList-area">
-			<div>12132</div>
-			<div>12321</div>
-			<div>12321</div>
+			<table>
+				<thead>
+					<tr>
+						<td><textarea id="teamBoardName"></textarea></td>
+						<td><button class="btn btn-sm btn-primary">등록</button></td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>자유게시판</td>
+						<td><a href="">❌</a></td>
+					</tr>
+					<tr>
+						<td>유머게시판</td>
+						<td>❌</td>
+					</tr>
+						<td>수다게시판</td>
+						<td>❌</td>
+					<tr>	
+						<td>신고게시판</td>
+						<td>❌</td>
+					</tr>
+				</tbody>
+			</table>
 		</div>
 
 		<div id="reply-area">
@@ -60,12 +97,12 @@
 							<c:when test="${not empty sessionScope.loginUser }">
 								<td><textarea id="replyContent" cols="50" rows="3"
 										style="resize: none;"></textarea></td>
-								<td><button onclick="insertReply();">글 등록</button></td>
+								<td><button onclick="">글 등록</button></td>
 							</c:when>
 							<c:otherwise>
 								<td><textarea readonly cols="50" rows="3"
 										style="resize: none;">로그인 후 이용가능한 서비스입니다.</textarea></td>
-								<td><button>글 등록</button></td>
+								<td><button class="btn btn-sm btn-primary">글 등록</button></td>
 							</c:otherwise>
 						</c:choose>
 					</tr>
@@ -78,71 +115,7 @@
 		</div>
 
 	</div>
-	<script>
 
-		function selectReplyList() {
-
-			// Servlet요청 AJAX로 보내서 조회해올건데
-
-			$.ajax({
-				url : 'replyList.do',
-				data : {
-					boardNo :${}
-		},
-				success : function(result) {
-					//console.log(result);
-
-					let resultStr = '';
-					for ( let i in result) {
-
-						resultStr += '<tr>' + '<td>' + result[i].replyWriter
-								+ '</td>' + '<td>' + result[i].replyContent
-								+ '</td>' + '<td>' + result[i].createDate
-								+ '</td>' + '</tr>'
-					}
-					;
-					$('#reply-area tbody').html(resultStr);
-
-				},
-				error : function(e) {
-					console.log(e);
-				}
-
-			});
-
-		}
-
-		$(function() {
-
-			selectReplyList();
-
-			setInterval(selectReplyList, 1000);
-
-		});
-
-		function insertReply() {
-
-			$.ajax({
-				url : 'replyInsert.do',
-				type : 'post',
-				data : {
-					content : $('#replyContent').val(),
-					boardNo :
-		},
-				success : function(result) {
-					//console.log(result);
-
-					if (result == 'success') {
-						$('#replyContent').val('');
-						selectReplyList();
-					}
-					;
-				}
-
-			});
-
-		}
-	</script>
 
 </body>
 </html>

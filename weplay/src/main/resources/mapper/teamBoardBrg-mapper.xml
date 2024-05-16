@@ -13,12 +13,12 @@
 
 	<select id="selectList" resultMap="teamBoardBrgResultSet">
 		SELECT
-		BOARD_CODE,
-		TEAM_NO,
-		BOARD_NAME
+			BOARD_CODE,
+			TEAM_NO,
+			BOARD_NAME
 		FROM
-		TEAM_BOARD_BRG
+			TEAM_BOARD_BRG
 		WHERE
-		TEAM_NO=#{teamNo}
+			TEAM_NO=#{teamNo}
 	</select>
 </mapper>

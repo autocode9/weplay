@@ -8,4 +8,9 @@ public interface TeamBoardBrgService {
 
 	List<TeamBoardBrg> selectList(int teamNo);
 	
+	int insertTeamBoardBrg (TeamBoardBrg teamBoardBrg);
+	
+	int deleteTeamBoardBrg (int boardCode);
+	
+	
 }

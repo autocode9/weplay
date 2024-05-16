@@ -65,7 +65,7 @@
 
 		<!-- 여기는 ajax할필요없음 -->
 		<div id="boardList-area" align="center">
-			<table>
+			<table  border="1" >
 				<thead>
 					<tr>
 						<td><textarea id="teamBoardName"></textarea></td>
@@ -82,12 +82,16 @@
 						<c:otherwise>
 							<c:forEach var="teamBoardBrg" items="${list}">
 								<tr>
-									<td>${ teamBoardBrg.boardName }</td>
-									<td>❌</td>
+									<td id="boardCode" style="display: none;">${teamBoardBrg.boardCode}</td>
+									<td><a href="">${ teamBoardBrg.boardName }</a></td>
+									<td><p onclick="delTeamBoardBrg();" style="cursor: pointer;">❌</p></td>
+
+									
 								</tr>
 							</c:forEach>
 						</c:otherwise>
 					</c:choose>
+					
 					<!-- 
 					<tr>
 						<td>자유게시판</td>
@@ -107,6 +111,38 @@
 				</tbody>
 			</table>
 		</div>
+
+		<!-- 브릿지 ajax 스크립트 -->
+		<script  type="text/javascript">
+		
+		function delTeamBoardBrg() {
+		    var boardCode = event.target.closest('tr').querySelector('#boardCode').textContent;
+		    $.ajax({
+		        type: "POST",
+		        url: "teamBoardBrg",
+		        data: { boardCode: boardCode },
+		        success: function(response) {
+		            if (response === 'success') {
+		                // 성공 시 처리할 내용
+		                alert("게시글이 삭제되었습니다.");
+		                // 삭제된 항목을 화면에서 제거하는 코드를 추가하세요
+		                event.target.closest('tr').remove();
+		            } else {
+		                // 실패 시 처리할 내용
+		                alert("게시글 삭제에 실패했습니다.");
+		            }
+		        },
+		        error: function(xhr, status, error) {
+		            // 오류 발생 시 처리할 내용
+		            console.error(xhr.responseText);
+		            alert("서버 오류가 발생했습니다. 다시 시도해주세요.");
+		        }
+		    });
+		}
+
+		
+		</script>
+
 
 		<div id="reply-area">
 

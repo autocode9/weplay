@@ -11,14 +11,14 @@
 
 
 
-<select id="selectList" resultMap="teamBoardBrgResultSet">
-	SELECT
+	<select id="selectList" resultMap="teamBoardBrgResultSet">
+		SELECT
 		BOARD_CODE,
 		TEAM_NO,
 		BOARD_NAME
-	FROM 
+		FROM
 		TEAM_BOARD_BRG
-	WHERE
+		WHERE
 		TEAM_NO=#{teamNo}
-</select>
+	</select>
 </mapper>

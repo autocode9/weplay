@@ -45,11 +45,13 @@
 #reply-area {
 	float: right;
 	width: 70%;
+
 }
 
 #teamBoardName {
 	resize: none; /* 사용자가 크기를 조절할 수 없도록 함 */
 	width: 90%;
+	height : 30px;
 }
 </style>
 </head>
@@ -59,8 +61,10 @@
 
 
 	<div class="outer">
-		<!-- 여기는 ajax할필요없음 -->	
-		<div id="boardList-area">
+
+
+		<!-- 여기는 ajax할필요없음 -->
+		<div id="boardList-area" align="center">
 			<table>
 				<thead>
 					<tr>
@@ -69,6 +73,22 @@
 					</tr>
 				</thead>
 				<tbody>
+					<c:choose>
+						<c:when test="${empty list }">
+							<tr>
+								<td colspan="2">현재 게시판없어요.😢</td>
+							</tr>
+						</c:when>
+						<c:otherwise>
+							<c:forEach var="teamBoardBrg" items="${list}">
+								<tr>
+									<td>${ teamBoardBrg.boardName }</td>
+									<td>❌</td>
+								</tr>
+							</c:forEach>
+						</c:otherwise>
+					</c:choose>
+					<!-- 
 					<tr>
 						<td>자유게시판</td>
 						<td><a href="">❌</a></td>
@@ -82,7 +102,8 @@
 					<tr>	
 						<td>신고게시판</td>
 						<td>❌</td>
-					</tr>
+					</tr> -->
+
 				</tbody>
 			</table>
 		</div>

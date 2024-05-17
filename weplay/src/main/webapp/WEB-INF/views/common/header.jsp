@@ -75,6 +75,8 @@ body {
 	list-style-type: none;
 	margin: auto;
 	display: none;
+	background-color: black;
+	z-index: auto;
 }
 
 .navi-in a {

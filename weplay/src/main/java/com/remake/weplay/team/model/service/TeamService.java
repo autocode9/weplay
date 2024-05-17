@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.apache.ibatis.session.RowBounds;
 
-import com.google.gson.JsonElement;
 import com.remake.weplay.team.model.vo.Team;
 import com.remake.weplay.team.model.vo.TeamApplication;
 

@@ -118,8 +118,8 @@
     			selectTeams(page);
     		})
     		
-    		$('#teams-area').on('click', '.team-tr', (event) => {
-    			console.log();
+    		$('#teams-area tbody').on('click', '.team-tr', () => {
+    			console.log($(this));
     			
     		});
     		

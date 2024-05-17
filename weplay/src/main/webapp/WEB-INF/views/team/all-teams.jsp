@@ -118,6 +118,11 @@
     			selectTeams(page);
     		})
     		
+    		$('#teams-area').on('click', '.team-tr', (event) => {
+    			console.log();
+    			
+    		});
+    		
     	});
     	
     	
@@ -209,7 +214,8 @@
     	
     	function createTeamTr(team){ // 팀 테이블 행 생성 메소드
     		const teamTr = document.createElement('tr');
-    		
+    		teamTr.setAttribute("class", "team-tr");
+    	
     		const keys = Object.keys(team);
     			
     		for (let i in keys) {

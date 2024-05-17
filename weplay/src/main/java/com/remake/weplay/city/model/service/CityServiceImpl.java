@@ -26,7 +26,6 @@ public class CityServiceImpl implements CityService {
 	// 시/군/구 목록 조회
 	@Override
 	public List<City> selectDistricts(String city) {
-		System.out.println(cityRepository.selectDistricts(sqlSession, city));
 		return cityRepository.selectDistricts(sqlSession, city);
 	}
 	

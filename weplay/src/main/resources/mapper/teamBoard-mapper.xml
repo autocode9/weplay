@@ -25,6 +25,9 @@
 
 	<insert id="insertTeamBoardBrg" parameterType="teamBoardBrg">
 
+	INSERT INTO TEAM_BOARD (BOARD_NO,BOARD_CODE,MEMBER_NO,CONTENT)
+	 VALUES
+		(SEQ_TBNO.NEXTVAL, #{boardCode}, #{userNo} ,#{content})
 	</insert>
 
 

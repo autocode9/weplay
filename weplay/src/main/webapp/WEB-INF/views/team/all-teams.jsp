@@ -121,7 +121,6 @@
     	});
     	
     	
-    	
     	function selectCities(){ // 시도 셀렉트 옵션 조회
     		$.ajax({
     			url : 'city',

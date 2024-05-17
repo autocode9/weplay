@@ -188,14 +188,15 @@
 						<th>${ loginUser.nickName }</th>
 						<c:choose>
 							<c:when test="${not empty sessionScope.loginUser }">
-								<td><textarea id="replyContent" cols="50" rows="3"
+								<td><textarea id="content" cols="50" rows="3"
 										style="resize: none;"></textarea></td>
-								<td><button onclick="">글 등록</button></td>
+								<td><button class="btn btn-sm btn-primary">글 등록</button></td>
 							</c:when>
 							<c:otherwise>
 								<td><textarea readonly cols="50" rows="3"
 										style="resize: none;">로그인 후 이용가능한 서비스입니다.</textarea></td>
-								<td><button class="btn btn-sm btn-primary">글 등록</button></td>
+								<td><button  class="btn btn-sm btn-primary" onclick="addteamBoard()">글 등록</button></td>
+
 							</c:otherwise>
 						</c:choose>
 					</tr>
@@ -208,18 +209,19 @@
 			<br> <br> <br> <br>
 		</div>
 	</div>
-	<script>
-	
-		
+	<script >
+			var boardCode;
+			
 			function selectTeamBoard(element){
-				var boardCode = $(element).closest('tr').find('.boardCode').text();
+				var selectedBoardCode = $(element).closest('tr').find('.boardCode').text();
+				boardCode = selectedBoardCode;
 				$.ajax({
 					url : 'teamboardSelect',
 					data :{
 						boardCode : boardCode
 						},
 					success : function(result){
-						console.log(result);
+						console.log(boardCode);
 						
 						let resultStr = '';
 						for(let i in result){
@@ -240,9 +242,33 @@
 				});
 				
 			}
+			/*팀보드 인서트*/
+			
+				function addteamBoard(){
+		    	if($('#content').val().trim() != ''){
+		    		$.ajax({
+		    			url:'teamboardinsert',
+		    			data : {
+		    				boardCode : boardCode,
+		    				content : $('#content').val(),
+		    				userNo : ${sessionScope.loginUser.useNo}
+		    			},
+		    			type:'post',
+		    			success : function(result){
+		    				console.log(result);
+		    				
+		    				if(result ==='success'){
+		    					$('#conent').val('');
+		    				}
+		    			}
+		    			
+		    		});
+		    	}	
+		    	else{
+		    		alert('장난꾸러기야 장난치지마라')
+		    	}
+			}
 		
 	</script>
-
-
 </body>
 </html>

@@ -128,9 +128,7 @@
 	    		$('#modal-text textarea').val('');
 	    	});
 	    	
-	    	$('#apply-join').click(() => {
-	    		console.log($('#modal-text textarea').val());
-				
+	    	$('#apply-join').click(() => {			
 	    		$.ajax({
 	    			url : 'joinTeam',
 	    			type : 'post',
@@ -140,7 +138,15 @@
 	    				applyContent : $('#modal-text textarea').val()
 	    			},
 	    			success : result => {
-	    				console.log(result);
+	    				if(result == 'Y'){
+	    					alert('가입 신청 성공!');
+	    				}
+	    				else if(result == 'N'){
+	    					alert('이미 가입 신청을 하셨습니다.');
+	    				}
+	    				else {
+	    					alert('가입 신청 실패..');
+	    				}
 	    			}
 	    		});
 	    	});

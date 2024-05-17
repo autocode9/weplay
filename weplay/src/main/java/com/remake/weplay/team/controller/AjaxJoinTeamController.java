@@ -20,13 +20,14 @@ public class AjaxJoinTeamController {
 	
 	@PostMapping
 	public String joinTeam(TeamApplication teamApp) {
-		// Y : 성공 / E : 실패 / N : 이미 신청함
-		if(teamService.applyCheck(teamApp) != 0) {
-			if(teamService.joinTeam(teamApp) > 0) return "Y";
-			else return "E";
+		String result; // Y : 성공 / E : 실패 / N : 이미 신청함
+		if(teamService.applyCheck(teamApp) == 0) {
+			if(teamService.joinTeam(teamApp) > 0) result = "Y";
+			else result = "E";
 		} else {
-			return "N";
+			result = "N";
 		}
+		return gson.toJson(result);
 	}
 
 

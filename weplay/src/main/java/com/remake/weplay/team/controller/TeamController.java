@@ -25,7 +25,7 @@ public class TeamController {
 		if(team != null) {
 			mv.addObject("team", team).setViewName("team/team-info");
 		} else {
-			
+			mv.setViewName("redirect:/");
 		}
 		return mv;
 	}

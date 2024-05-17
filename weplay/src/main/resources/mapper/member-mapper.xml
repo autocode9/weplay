@@ -7,30 +7,37 @@
 	<!-- 로그인용 쿼리문 -->
 	<select id="login" parameterType="member" resultType="member">
 		SELECT
-		       MEMBER_NO userNo,
-		       	MEMBER_ID userId,
-		       	PASSWORD userPwd,
-		       	NICKNAME nickName,
-		       	AGE age,
-		       	PHONE phone,
-		       	ADDRESS address,
-		       	INFO info,
-		       	SKILL skill,
-		       	POSITION position,
-		       	SUB_POSITION subPosition,
-		       	ENROLL_DATE enrollDate,
-				UPDATE_DATE updateDate,
-				STATUS status
+		       M.MEMBER_NO userNo,
+               MEMBER_ID userId,
+		       PASSWORD userPwd,
+		       NICKNAME nickName,
+		       AGE age,
+		       PHONE phone,
+		       ADDRESS address,
+		       INFO info,
+		       SKILL skill,
+		       POSITION position,
+		       SUB_POSITION subPosition,
+		       M.ENROLL_DATE enrollDate,
+			   UPDATE_DATE updateDate,
+			   TEAM_NO teamNo,
+			   MEMBER_TYPE memberType
 		  FROM
-		       MEMBER
+		       MEMBER M
+          LEFT
+		  JOIN
+		       (SELECT
+                       TEAM_NO,
+                       MEMBER_NO,
+			   		   MEMBER_TYPE 
+                  FROM
+                       TEAM_MEMBER
+                 WHERE 
+                       STATUS = 'Y') T ON(M.MEMBER_NO = T.MEMBER_NO)
 		 WHERE
-		       MEMBER_ID = #{userId}
-		  <!--  
-		   AND
-		       USER_PWD = #{userPwd}
-		   -->
+		       MEMBER_ID = #{ userId}
 		   AND 
-		       STATUS = 'Y'
+		       M.STATUS = 'Y'
 	</select>
 	
 	<!-- 회원가입용 쿼리문 -->

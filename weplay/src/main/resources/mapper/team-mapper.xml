@@ -43,8 +43,7 @@
 		       teamSkill,
 		       teamMembers,
 		       avgAge,
-		       teamRecord,
-		       teamLogo
+		       teamRecord
 		  FROM
 		       (SELECT
 		               DENSE_RANK() OVER(ORDER BY WIN DESC, DRAW DESC, LOSE, TEAM_SKILL) AS teamRank,
@@ -55,24 +54,11 @@
 				       TEAM_SKILL AS teamSkill,
 		               teamMembers,
 				       AVG_AGE AS avgAge,
-				       WIN || '승 ' || DRAW || '무 ' || LOSE || '패' AS teamRecord,
-				       NVL(FILE_PATH, 'resources/images/team/noLogo.jpg') AS teamLogo 
+				       WIN || '승 ' || DRAW || '무 ' || LOSE || '패' AS teamRecord
 		          FROM
 		               TEAM
 		          JOIN
-		               (SELECT
-		                       TEAM_NO,
-		                       COUNT(*) || '명' AS teamMembers
-		                  FROM
-		                       TEAM_MEMBER
-		                 WHERE
-		                       STATUS = 'Y'
-		                 GROUP
-		                    BY
-		                       TEAM_NO) USING(TEAM_NO)
-		          LEFT
-		          JOIN
-		               LOGO USING(TEAM_NO)
+		               V_TEAM_MEMBER USING(TEAM_NO)
 		         ORDER 
 		            BY
 		               teamRank)
@@ -105,6 +91,7 @@
 		       LOCATION,
 		       TEAM_INFO AS teamInfo,
 		       TEAM_SKILL AS teamSkill,
+		       teamMembers,
 		       AVG_AGE AS avgAge,
 		       UNIFORM,
 		       FD_YEAR AS fdYear,
@@ -115,11 +102,14 @@
 		  LEFT
 		  JOIN
 		       LOGO USING(TEAM_NO)
+		  JOIN
+       		   V_TEAM_MEMBER USING(TEAM_NO)
 		 WHERE
 		       TEAM_NO = #{teamNo}
 		   AND
 		       STATUS = 'Y'
 	</select>
 	
+
 	
 </mapper>

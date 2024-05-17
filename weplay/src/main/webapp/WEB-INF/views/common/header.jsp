@@ -7,17 +7,11 @@
 <meta charset="UTF-8">
 <title>WEPLAY</title>
 <!-- jQuery 라이브러리 -->
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <!-- 부트스트랩 스타일 -->
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <!-- 부트스트랩 스크립트 -->
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
-<script
-	src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 <style>
 body {
@@ -109,7 +103,7 @@ body {
 		<script>
 			alert('${ alertMsg }');
 		</script>
-		<c:remove var="alertMsg" scope="session" />
+		<c:remove var="alertMsg" />
 	</c:if>
 
 	<div id="header">

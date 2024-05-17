@@ -8,6 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.remake.weplay.team.model.vo.Team;
+import com.remake.weplay.team.model.vo.TeamApplication;
 
 @Repository
 public class TeamRepository {
@@ -23,5 +24,14 @@ public class TeamRepository {
 	public Team selectTeam(SqlSessionTemplate sqlSession, int teamNo) {
 		return sqlSession.selectOne("teamMapper.selectTeam", teamNo);
 	}
+
+	public int applyCheck(SqlSessionTemplate sqlSession, TeamApplication teamApp) {
+		return sqlSession.selectOne("teamApplicationMapper.applyCheck", teamApp);
+	}
+	
+	public int joinTeam(SqlSessionTemplate sqlSession, TeamApplication teamApp) {
+		return sqlSession.insert("teamApplicationMapper.joinTeam", teamApp);
+	}
+
 
 }

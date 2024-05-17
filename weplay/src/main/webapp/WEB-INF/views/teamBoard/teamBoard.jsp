@@ -101,12 +101,6 @@
 
 		<!-- 브릿지 ajax 스크립트 -->
 		<script>
-		  var selectedBoardCode;
-
-		    // 사용자가 게시판을 선택할 때마다 호출하여 선택한 게시판 코드를 업데이트하는 함수
-		    function updateSelectedBoardCode(boardCode) {
-		        selectedBoardCode = boardCode;
-		    }
 			//삭제 브릿지테이블
 			function delTeamBoardBrg(element) {
 				var boardCode = $(element).closest('tr').find('.boardCode').text();
@@ -215,31 +209,8 @@
 		</div>
 	</div>
 	<script>
-			function addteamBoard(){
-		    	if($('#content').val().trim() != ''){
-		    		$.ajax({
-		    			url:'teamboardSelect',
-		    			data : {
-		    				boardCode : selectedBoardCode,
-		    				content : $('#content').val(),
-		    				userNo : '${sessionScope.loginUser.useNo}'
-		    			},
-		    			type:'post',
-		    			success : funciton(result){
-		    				console.log(result);
-		    				
-		    				if(result ==='success'){
-		    					$('#conent').val('');
-		    				}
-		    			}
-		    			
-		    		});
-		    	}	
-		    	else{
-		    		alertify.alert('장난꾸러기야 장난치지마라')
-		    	}
-			}
-				
+	
+		
 			function selectTeamBoard(element){
 				var boardCode = $(element).closest('tr').find('.boardCode').text();
 				$.ajax({
@@ -254,7 +225,6 @@
 						for(let i in result){
 							
 							resultStr += '<tr>'
-								+'<td style="display: none;">'+result[i].boardCode+'</td>'
 									   + '<td>' + result[i].nickName + '</td>'
 									   + '<td>' + result[i].content + '</td>'
 									   + '<td>' + result[i].createDate + '</td>'

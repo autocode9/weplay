@@ -29,5 +29,10 @@ public class TeamServiceImpl implements TeamService {
 		return teamRepository.selectTeams(sqlSession, map, rowBounds);
 	}
 
+	@Override
+	public Team selectTeam(int teamNo) {
+		return teamRepository.selectTeam(sqlSession, teamNo);
+	}
+
 
 }

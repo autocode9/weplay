@@ -5,12 +5,6 @@
 <head>
     <meta charset="UTF-8">
     <title>WEPLAY:AllTeams</title>
-    <!-- jQuery 라이브러리 -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <!-- 부트스트랩 스타일 -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <!-- 부트스트랩 스크립트 -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
     <style>
         #outer{
@@ -116,10 +110,15 @@
     		
     		$('#searchByKeyword').click(() => {
     			selectTeams(page);
+    		});
+    		
+    		$('#teams-area tbody').on('click', '.team-tr', function() {
+    			location.href = 'teamInfo?teamNo=' + $(this).find('.teamNo').val();
     		})
+    			
+    		
     		
     	});
-    	
     	
     	
     	function selectCities(){ // 시도 셀렉트 옵션 조회
@@ -210,7 +209,8 @@
     	
     	function createTeamTr(team){ // 팀 테이블 행 생성 메소드
     		const teamTr = document.createElement('tr');
-    		
+    		teamTr.setAttribute("class", "team-tr");
+    	
     		const keys = Object.keys(team);
     			
     		for (let i in keys) {
@@ -219,6 +219,7 @@
     			
     			if(i == 0){ // teamNo => input:hidden
     				const teamNo = document.createElement("input");
+    				teamNo.setAttribute("class", "teamNo");
     				teamNo.setAttribute("type", "hidden");
     				teamNo.setAttribute("value", value);
 					teamTr.appendChild(teamNo);

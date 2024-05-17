@@ -20,4 +20,8 @@ public class TeamRepository {
 		return sqlSession.selectList("teamMapper.selectTeams", map, rowBounds);
 	}
 
+	public Team selectTeam(SqlSessionTemplate sqlSession, int teamNo) {
+		return sqlSession.selectOne("teamMapper.selectTeam", teamNo);
+	}
+
 }

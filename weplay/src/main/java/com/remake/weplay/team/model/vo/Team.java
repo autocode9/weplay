@@ -26,5 +26,6 @@ public class Team {
 	String updateDate;
 	String status;
 	String teamRecord;
+	String teamLogo;
 
 }

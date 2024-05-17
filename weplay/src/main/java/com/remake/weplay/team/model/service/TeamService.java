@@ -13,5 +13,7 @@ public interface TeamService {
 	
 	List<Team> selectTeams(HashMap<String, String> map, RowBounds rowBounds);
 
+	Team selectTeam(int teamNo);
+
 
 }

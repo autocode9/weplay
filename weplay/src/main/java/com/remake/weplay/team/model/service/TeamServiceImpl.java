@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.remake.weplay.team.model.dao.TeamRepository;
 import com.remake.weplay.team.model.vo.Team;
+import com.remake.weplay.team.model.vo.TeamApplication;
 
 @Service
 public class TeamServiceImpl implements TeamService {
@@ -33,6 +34,17 @@ public class TeamServiceImpl implements TeamService {
 	public Team selectTeam(int teamNo) {
 		return teamRepository.selectTeam(sqlSession, teamNo);
 	}
+
+	@Override
+	public int applyCheck(TeamApplication teamApp) {
+		return teamRepository.applyCheck(sqlSession, teamApp);
+	}
+	
+	@Override
+	public int joinTeam(TeamApplication teamApp) {
+		return teamRepository.joinTeam(sqlSession, teamApp);
+	}
+
 
 
 }

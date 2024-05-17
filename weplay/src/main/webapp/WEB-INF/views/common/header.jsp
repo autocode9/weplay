@@ -109,7 +109,7 @@ body {
 		<script>
 			alert('${ alertMsg }');
 		</script>
-		<c:remove var="alertMsg" scope="session" />
+		<c:remove var="alertMsg" />
 	</c:if>
 
 	<div id="header">

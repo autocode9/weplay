@@ -35,4 +35,6 @@ public class Member {
 	private Date enrollDate;
 	private Date updateDate;
 	private String status;
+	private int teamNo;
+	private String memberType;
 }

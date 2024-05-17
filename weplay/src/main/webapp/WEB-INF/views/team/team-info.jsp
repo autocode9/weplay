@@ -1,11 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>WEPLAY:TeamInfo</title>
 
     <style>
         #outer{
@@ -46,6 +47,25 @@
             padding-top: 2%;
             text-align: center;
         }
+        .modal-body {
+        	display: flex;
+        }
+        #modal-logo{
+        	width: 40%;
+        	height: 100%;
+        	> img{
+        		width: 100%;
+        		height: 100%;
+        	}
+        }
+        #modal-text{
+        	width: 60%;
+        	> textarea{
+        		width: 100%;
+        		height: 100%;
+        	}
+        }
+        
     </style>
 </head>
 <body>
@@ -55,37 +75,114 @@
     <div id="outer">
         <div id="info-area">
             <div id="logo-area" class="content-box">
-                <img src="https://storage.googleapis.com/cr-resource/image/f6accb6d63fca640b9ca3eb49c8a7413/juivseo/800/dd3d8aa01c1342889ad71306b7ae2045.jpg"> <br>
-                <button class="btn btn-success">팀 가입 신청</button>
-                <button class="btn btn-primary">경기 신청</button>
+                <img src="${ team.teamLogo }"> <br>
+                <input id="teamNo" type="hidden" value="${ team.teamNo }">
+                <input id="memberNo" type="hidden" value="${ loginUser.userNo }">
+                <input id="memberTeamNo" type="hidden" value="${ loginUser.teamNo }"> 
+                <input id="memberType" type="hidden" value="${ loginUser.memberType }">
+                
+                <button class="btn btn-success apply-join" data-toggle="modal" data-target="#ApplyJoinModal">팀 가입 신청</button>
+                <button class="btn btn-primary apply-match">경기 신청</button>
             </div>
             <div id="content-area" class="content-box">
-                <input type="hidden" value="">
-                <h1>리메이크 FC</h1>
-                <button class="btn btn-outline-primary">팀 페이지로 이동</button> <br>
-               
-                <h3>2승 0무 1패</h3>
-                <span>창단연도 : 2023년</span> <br>
+                <h1 id="teamName">${ team.teamName }</h1>
+                
+                <c:if test="${ not empty loginUser and loginUser.teamNo eq team.teamNo }">
+                	<button class="btn btn-outline-primary">팀 페이지로 이동</button> <br>
+               	</c:if>
+               	
+                <h3>${ team.teamRecord }</h3>
+                <span>창단연도 : ${ team.fdYear }</span> <br>
                 <div>
-                    <span>지역 : 서울 종로구</span> <br>
-                    <span>팀유형 : 청년</span> <br>
-                    <span>실력 : 상</span> <br>
+                    <span>지역 : ${ team.location }</span> <br>
+                    <span>팀유형 : ${ team.teamType }</span> <br>
+                    <span>실력 : ${ team.teamSkill }</span> <br>
                 </div>
                 <div>
-                    <span>인원 : 15명</span> <br>
-                    <span>평균 나이 : 20대</span> <br>
-                    <span>유니폼 : 블루</span> <br>
+                    <span>인원 : ${ team.teamMembers }</span> <br>
+                    <span>평균 나이 : ${ team.avgAge }</span> <br>
+                    <span>유니폼 : ${ team.uniform }</span> <br>
                 </div>
                 <br><br>
                 <h4>팀 소개</h4>
-                <p>
-                    주는 원질이 되는 것이다 그들은 앞이 긴지라 착목한는 곳이 원대하고 그들은 피가 더운지라 실현에 대한 자신과 용기가 있다 그러므로 그들은 이상의 보배를 능히 품으며 그들의 이상은 아름답고 소담스러운 열매를 맺어 우리 인생을
-                </p>
+                <p>${ team.teamInfo }</p>
             </div>
         </div>
         <div id="btn-area">
-            <button class="btn btn-info">뒤로가기</button>
+            <button onclick="history.back()" class="btn btn-info">뒤로가기</button>
         </div>
     </div>
+    
+    <script>
+    	$(() => {
+    		if($('#memberTeamNo').val() != '0'){
+	    		$('.apply-join').attr('disabled', true);
+    			$('.apply-join').addClass('disabled');
+    		}
+    		if($('#memberType').val() != '관리자' && $('#memberType').val() != '창시자'){
+    			$('.apply-match').attr('disabled', true);
+    			$('.apply-match').addClass('disabled');
+    		}
+    		
+	    	$('.apply-join').click(() => {
+	    		$('#modal-text textarea').val('');
+	    	});
+	    	
+	    	$('#apply-join').click(() => {
+	    		console.log($('#modal-text textarea').val());
+				
+	    		$.ajax({
+	    			url : 'joinTeam',
+	    			type : 'post',
+	    			data : {
+	    				memberNo : $('#memberNo').val(),
+	    				teamNo : $('#teamNo').val(),
+	    				applyContent : $('#modal-text textarea').val()
+	    			},
+	    			success : result => {
+	    				console.log(result);
+	    			}
+	    		});
+	    	});
+	    	
+			$('.apply-match').click(() => {
+				if(confirm($('#teamName').text() + '와의 경기를 신청하시겠습니까?')){
+					
+				}
+	    	});
+    	});
+    </script>
+    
+    <!-- The Modal -->
+	<div class="modal" id="ApplyJoinModal">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	
+	      <!-- Modal Header -->
+	      <div class="modal-header">
+	        <h4 class="modal-title">${ team.teamName } 가입 신청</h4>
+	        <button type="button" class="close" data-dismiss="modal">&times;</button>
+	      </div>
+	
+	      <!-- Modal body -->
+	      <div class="modal-body">
+	      	<div id="modal-logo">
+	      		<img src="${ team.teamLogo }">
+	      	</div>
+	        <div id="modal-text">
+		        <textarea placeholder="신청 사유 또는 간단한 자기소개를 입력해주세요.."></textarea>
+	        </div>
+	      </div>
+	
+	      <!-- Modal footer -->
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-dark" data-dismiss="modal">취소</button>
+	        <button type="button" id="apply-join" class="btn btn-success" data-dismiss="modal">가입 신청</button>
+	      </div>
+	
+	    </div>
+	  </div>
+	</div>
+	
 </body>
 </html>

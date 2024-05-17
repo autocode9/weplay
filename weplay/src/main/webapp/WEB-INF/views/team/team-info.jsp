@@ -49,6 +49,9 @@
     </style>
 </head>
 <body>
+
+	<jsp:include page="../common/header.jsp"/>
+	
     <div id="outer">
         <div id="info-area">
             <div id="logo-area" class="content-box">

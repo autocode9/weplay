@@ -112,8 +112,8 @@
     			selectTeams(page);
     		});
     		
-    		$('#teams-area tbody').on('click', 'team-tr', () => {
-    			console.log($(this));
+    		$('#teams-area tbody').on('click', '.team-tr', function() {
+    			location.href = 'teamInfo?teamNo=' + $(this).find('.teamNo').val();
     		})
     			
     		
@@ -219,6 +219,7 @@
     			
     			if(i == 0){ // teamNo => input:hidden
     				const teamNo = document.createElement("input");
+    				teamNo.setAttribute("class", "teamNo");
     				teamNo.setAttribute("type", "hidden");
     				teamNo.setAttribute("value", value);
 					teamTr.appendChild(teamNo);

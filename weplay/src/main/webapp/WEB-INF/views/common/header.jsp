@@ -105,6 +105,12 @@ body {
 </head>
 <body>
 
+	<c:if test="${ not empty alertMsg }">
+		<script>
+			alert('${ alertMsg }');
+		</script>
+		<c:remove var="alertMsg" scope="session" />
+	</c:if>
 
 	<div id="header">
 		<div id="header-btn-area">

@@ -67,8 +67,10 @@
 			<table border="1">
 				<thead>
 					<tr>
-						<td><textarea id="boardName" style="resize: none;"></textarea></td>
-						<td><button class="btn btn-sm btn-primary">등록</button></td>
+						<input type="hidden" id="teamNo" value="${teamNo}">
+						<td><textarea id="boardBrgName" style="resize: none;"></textarea></td>
+						<td><button id="boardBrgInsert"
+								onclick="insertTeamBoardBrg();" class="btn btn-sm btn-primary">등록</button></td>
 					</tr>
 				</thead>
 				<tbody>
@@ -112,33 +114,71 @@
 
 		<!-- 브릿지 ajax 스크립트 -->
 		<script>
-		function delTeamBoardBrg(element) {
-		    var boardCode = $(element).closest('tr').find('.boardCode').text();
-		    $.ajax({
-		        type: "post",
-		        url: "deleteTeamBoardBrg",
-		        data: {
-		            boardCode: boardCode
-		        },
-		        success: function(response) {
-		            if (response === 'success') {
-		                alert("게시글이 삭제되었습니다.");
-		                // 삭제된 항목을 화면에서 제거하는 코드를 추가하세요
-		                $(element).closest('tr').remove();
-		                location.reload();
-		            } else {
-		                // 실패 시 처리할 내용
-		                alert("게시글 삭제에 실패했습니다.");
-		            }
-		        },
-		        error: function(xhr, status, error) {
-		            // 오류 발생 시 처리할 내용
-		            console.error(xhr.responseText);
-		            alert("서버 오류가 발생했습니다. 다시 시도해주세요.");
-		        }
-		    });
-		}
+			//삭제 브릿지테이블
+			function delTeamBoardBrg(element) {
+				var boardCode = $(element).closest('tr').find('.boardCode')
+						.text();
+				$.ajax({
+					type : "post",
+					url : "deleteTeamBoardBrg",
+					data : {
+						boardCode : boardCode
+					},
+					success : function(response) {
+						if (response === 'success') {
+							alert("게시글이 삭제되었습니다.");
+							// 삭제된 항목을 화면에서 제거하는 코드를 추가하세요
+							$(element).closest('tr').remove();
+							location.reload();
+						} else {
+							// 실패 시 처리할 내용
+							alert("게시글 삭제에 실패했습니다.");
+						}
+					},
+					error : function(xhr, status, error) {
+						// 오류 발생 시 처리할 내용
+						console.error(xhr.responseText);
+						alert("서버 오류가 발생했습니다. 다시 시도해주세요.");
+					}
+				});
+			}
 
+			//삽입브릿지
+			function insertTeamBoardBrg() {
+				$.ajax({
+					type : "post",
+					url : "insertTeamBoardBrg",
+					data : {
+						teamNo : getParameterByName('teamNo'),
+						boardName : $('#boardBrgName').val()
+					},
+					success : function(response) {
+						// AJAX 요청 성공 시 처리할 내용
+						if (response === 'success') {
+							alert("게시글이 성공적으로 등록되었습니다");
+							location.reload();
+						} else {
+							alert("게시글 등록에 실패했습니다.");
+						}
+					},
+					error : function(xhr, status, error) {
+						// AJAX 요청 실패 시 처리할 내용
+						console.error("AJAX 요청에 실패했습니다.");
+						console.error(xhr.responseText);
+					}
+				});
+			}
+
+			function getParameterByName(name) {
+				name = name.replace(/[\[\]]/g, "\\$&");
+				var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"), results = regex
+						.exec(window.location.href);
+				if (!results)
+					return null;
+				if (!results[2])
+					return '';
+				return decodeURIComponent(results[2].replace(/\+/g, " "));
+			}
 		</script>
 
 

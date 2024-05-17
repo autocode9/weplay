@@ -45,13 +45,12 @@
 #reply-area {
 	float: right;
 	width: 70%;
-
 }
 
 #teamBoardName {
 	resize: none; /* 사용자가 크기를 조절할 수 없도록 함 */
 	width: 90%;
-	height : 30px;
+	height: 30px;
 }
 </style>
 </head>
@@ -65,10 +64,10 @@
 
 		<!-- 여기는 ajax할필요없음 -->
 		<div id="boardList-area" align="center">
-			<table  border="1" >
+			<table border="1">
 				<thead>
 					<tr>
-						<td><textarea id="teamBoardName"></textarea></td>
+						<td><textarea id="boardName" style="resize: none;"></textarea></td>
 						<td><button class="btn btn-sm btn-primary">등록</button></td>
 					</tr>
 				</thead>
@@ -82,16 +81,15 @@
 						<c:otherwise>
 							<c:forEach var="teamBoardBrg" items="${list}">
 								<tr>
-									<td id="boardCode" style="display: none;">${teamBoardBrg.boardCode}</td>
+									<td class="boardCode" style="display: none;">${teamBoardBrg.boardCode}</td>
 									<td><a href="">${ teamBoardBrg.boardName }</a></td>
-									<td><p onclick="delTeamBoardBrg();" style="cursor: pointer;">❌</p></td>
-
-									
+									<td><p onclick="delTeamBoardBrg(this);"
+											style="cursor: pointer;">❌</p></td>
 								</tr>
 							</c:forEach>
 						</c:otherwise>
 					</c:choose>
-					
+
 					<!-- 
 					<tr>
 						<td>자유게시판</td>
@@ -113,20 +111,21 @@
 		</div>
 
 		<!-- 브릿지 ajax 스크립트 -->
-		<script  type="text/javascript">
-		
-		function delTeamBoardBrg() {
-		    var boardCode = event.target.closest('tr').querySelector('#boardCode').textContent;
+		<script>
+		function delTeamBoardBrg(element) {
+		    var boardCode = $(element).closest('tr').find('.boardCode').text();
 		    $.ajax({
-		        type: "POST",
-		        url: "teamBoardBrg",
-		        data: { boardCode: boardCode },
+		        type: "post",
+		        url: "deleteTeamBoardBrg",
+		        data: {
+		            boardCode: boardCode
+		        },
 		        success: function(response) {
 		            if (response === 'success') {
-		                // 성공 시 처리할 내용
 		                alert("게시글이 삭제되었습니다.");
 		                // 삭제된 항목을 화면에서 제거하는 코드를 추가하세요
-		                event.target.closest('tr').remove();
+		                $(element).closest('tr').remove();
+		                location.reload();
 		            } else {
 		                // 실패 시 처리할 내용
 		                alert("게시글 삭제에 실패했습니다.");
@@ -140,11 +139,21 @@
 		    });
 		}
 
-		
 		</script>
 
 
 		<div id="reply-area">
+
+			<table border="1" align="center">
+				<tbody>
+					<tr>
+						<th>223</th>
+						<td><textarea id="replyContent" cols="50" rows="3"
+								style="resize: none;"></textarea></td>
+						<td>24/05/17</td>
+					</tr>
+				</tbody>
+			</table>
 
 			<table border="1" align="center">
 				<thead>
@@ -168,9 +177,12 @@
 
 				</tbody>
 			</table>
+
 			<br> <br> <br> <br>
 		</div>
-
+		<div></div>
+		<button>팀 수정</button>
+		<button>팀 삭제</button>
 	</div>
 
 

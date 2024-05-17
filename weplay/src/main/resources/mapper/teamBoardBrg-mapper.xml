@@ -21,16 +21,18 @@
 		WHERE
 			TEAM_NO=#{teamNo}
 	</select>
-	
+
 	<insert id="insertTeamBoardBrg" parameterType="teamBoardBrg">
-		
-	INSERT INTO TEAM_BOARD VALUES
-	(SEQ_BCODE.NEXTVAL, #{teamNo}, #{boardName})
+
+		INSERT INTO TEAM_BOARD VALUES
+		(SEQ_BCODE.NEXTVAL, #{teamNo}, #{boardName})
 	</insert>
-	
+
 	<delete id="deleteTeamBoardBrg" parameterType="_int">
-	delete from  TEAM_BOARD_BRG where board_code=#{boardCode};
+		DELETE
+		FROM TEAM_BOARD_BRG
+		WHERE BOARD_CODE=#{boardCode}
 	</delete>
-	
-	
+
+
 </mapper>

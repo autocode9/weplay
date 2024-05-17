@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
+import com.remake.weplay.teamBoard.model.service.TeamBoardService;
 import com.remake.weplay.teamBoardBrg.model.service.TeamBoardBrgService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -18,14 +19,16 @@ import lombok.extern.slf4j.Slf4j;
 public class TeamBoardController {
 
 	@Autowired
-	private TeamBoardBrgService teamBoardBrgService; 
+	private TeamBoardService teamBoardService; 
 	
 	
 	@ResponseBody
 	@GetMapping(value="teamboardSelect", produces="applcation/json; charset=UTF-8")
-	public String selectBoardList(int boardNo) {
+	public String selectBoardList(int boardCode) {
+		System.out.println(boardCode);
+		System.out.println(new Gson().toJson(teamBoardService.selectList(boardCode)));
 		
-		return new Gson().toJson(boardService.selectReply(boardNo));
+		return new Gson().toJson(teamBoardService.selectList(boardCode));
 		
 	}
 	

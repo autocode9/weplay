@@ -22,14 +22,16 @@ public class TeamBoardServiceImpl implements TeamBoardService{
 	/***
 	 * 셀렉트
 	 */
+
+
 	@Override
-	public List<TeamBoard> selectList(int teamNo, int boardCode) {
-		return teamBoardRepository.selectList(sqlSession,teamNo, boardCode);
+	public List<TeamBoard> selectList(int boardCode) {
+		return teamBoardRepository.selectList(sqlSession, boardCode);
 	}
 
 	@Override
-	public int insertTeamBoard(Member member, TeamBoard teamBoard) {
-		return teamBoardRepository.insertTeamBoard(sqlSession, member, teamBoard);
+	public int insertTeamBoard(TeamBoard teamBoard) {
+		return teamBoardRepository.insertTeamBoard(sqlSession,teamBoard);
 	}
 	
 	

@@ -1,8 +1,6 @@
 package com.remake.weplay.teamBoard.model.dao;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
@@ -13,11 +11,12 @@ import com.remake.weplay.teamBoard.model.vo.TeamBoard;
 public class TeamBoardRepository {
 
 	
-	public List<TeamBoard> selectList(SqlSessionTemplate sqlSession, int teamNo, int boardCode){
-	    Map<String, Object> paramMap = new HashMap<>();
-	    paramMap.put("teamNo", teamNo);
-	    paramMap.put("boardCode", boardCode);
-	    return sqlSession.selectList("teamBoardMapper.selectList", paramMap);
+	
+	public List<TeamBoard> selectList(SqlSessionTemplate sqlSession, int boardCode){
+		return sqlSession.selectList("teamBoardMapper.selectList",boardCode );
 	}
-
+	
+	public int insertTeamBoard(SqlSessionTemplate sqlSession, TeamBoard teamBoard) {
+		return sqlSession.insert("teamBoardMapper.insertTeamBoard",teamBoard);
+	}
 }

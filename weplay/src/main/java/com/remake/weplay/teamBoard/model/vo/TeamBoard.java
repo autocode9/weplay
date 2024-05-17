@@ -22,4 +22,5 @@ public class TeamBoard {
 	private Date createDate;
 	private Date updateDate;
 	private String status;
+	private String nickName;
 }

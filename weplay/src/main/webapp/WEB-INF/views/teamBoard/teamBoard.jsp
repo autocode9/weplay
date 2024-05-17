@@ -42,7 +42,7 @@
 	padding-left: 20px;
 }
 
-#reply-area {
+#boardSelect-area {
 	float: right;
 	width: 70%;
 }
@@ -83,7 +83,7 @@
 							<c:forEach var="teamBoardBrg" items="${list}">
 								<tr>
 									<td class="boardCode" style="display: none;">${teamBoardBrg.boardCode}</td>
-									<td><a href="">${ teamBoardBrg.boardName }</a></td>
+									<td><p onclick="selectTeamBoard(this);" style="cursor: pointer;">${ teamBoardBrg.boardName }</p></td>
 									<td><p onclick="delTeamBoardBrg(this);"
 											style="cursor: pointer;">❌</p></td>
 								</tr>
@@ -103,8 +103,7 @@
 		<script>
 			//삭제 브릿지테이블
 			function delTeamBoardBrg(element) {
-				var boardCode = $(element).closest('tr').find('.boardCode')
-						.text();
+				var boardCode = $(element).closest('tr').find('.boardCode').text();
 				$.ajax({
 					type : "post",
 					url : "deleteTeamBoardBrg",
@@ -170,7 +169,7 @@
 		</script>
 
 
-		<div id="reply-area">
+		<div id="boardSelect-area">
 
 
 			<table border="1" align="center">
@@ -212,28 +211,26 @@
 	<script>
 	
 		
-			function selectTeamBoard(){
-				
-				// Servlet요청 AJAX로 보내서 조회해올건데
-				
+			function selectTeamBoard(element){
+				var boardCode = $(element).closest('tr').find('.boardCode').text();
 				$.ajax({
 					url : 'teamboardSelect',
 					data :{
-							boardCode :
-						}
+						boardCode : boardCode
+						},
 					success : function(result){
-						//console.log(result);
+						console.log(result);
 						
 						let resultStr = '';
 						for(let i in result){
 							
 							resultStr += '<tr>'
-									   + '<td>' + result[i].memberNo + '</td>'
-									   + '<td>' + result[i].replyContent + '</td>'
+									   + '<td>' + result[i].nickName + '</td>'
+									   + '<td>' + result[i].content + '</td>'
 									   + '<td>' + result[i].createDate + '</td>'
 									   + '</tr>'
 						};
-						$('#reply-area thead').html(resultStr);
+						$('#boardSelect-area thead').html(resultStr);
 						
 					},
 					error : function(e){
@@ -244,36 +241,6 @@
 				
 			}
 		
-		
-			$(function(){
-			
-				selectReplyList();
-				
-				setInterval(selectReplyList, 1000);
-				
-			});
-		
-			function insertReply(){
-				
-				$.ajax({
-					url:'replyInsert.do',
-					type : 'post',
-					data : {
-						content : $('#replyContent').val(),
-						boardNo : <%= board.getBoardNo() %>
-					},
-					success : function(result){
-						//console.log(result);
-						
-						if(result == 'success'){
-							$('#replyContent').val('');
-							selectReplyList();
-						};
-					}
-					
-				});
-				
-			}
 	</script>
 
 

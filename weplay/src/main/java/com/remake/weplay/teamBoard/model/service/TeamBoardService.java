@@ -8,9 +8,9 @@ import com.remake.weplay.teamBoard.model.vo.TeamBoard;
 public interface TeamBoardService {
 
 	//팀보드 가져오기
-	List<TeamBoard> selectList(int teamNo, int boardCode);
+	List<TeamBoard> selectList(int boardCode);
 	
-	int insertTeamBoard (Member member, TeamBoard teamBoard);
+	int insertTeamBoard (TeamBoard teamBoard);
 	
 	
 }

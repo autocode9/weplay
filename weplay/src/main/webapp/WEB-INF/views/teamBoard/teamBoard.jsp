@@ -64,10 +64,9 @@
 
 		<!-- 여기는 ajax할필요없음 -->
 		<div id="boardList-area" align="center">
-			<table border="1">
+			<table>
 				<thead>
 					<tr>
-						<input type="hidden" id="teamNo" value="${teamNo}">
 						<td><textarea id="boardBrgName" style="resize: none;"></textarea></td>
 						<td><button id="boardBrgInsert"
 								onclick="insertTeamBoardBrg();" class="btn btn-sm btn-primary">등록</button></td>
@@ -91,25 +90,13 @@
 							</c:forEach>
 						</c:otherwise>
 					</c:choose>
-
-					<!-- 
-					<tr>
-						<td>자유게시판</td>
-						<td><a href="">❌</a></td>
-					</tr>
-					<tr>
-						<td>유머게시판</td>
-						<td>❌</td>
-					</tr>
-						<td>수다게시판</td>
-						<td>❌</td>
-					<tr>	
-						<td>신고게시판</td>
-						<td>❌</td>
-					</tr> -->
-
 				</tbody>
 			</table>
+
+
+			<div></div>
+			<button class="btn btn-sm btn-primary">팀 수정</button>
+			<button class="btn btn-sm btn-danger">팀 삭제</button>
 		</div>
 
 		<!-- 브릿지 ajax 스크립트 -->
@@ -163,12 +150,13 @@
 					},
 					error : function(xhr, status, error) {
 						// AJAX 요청 실패 시 처리할 내용
-						console.error("AJAX 요청에 실패했습니다.");
+						alert("AJAX 요청에 실패했습니다.");
 						console.error(xhr.responseText);
 					}
 				});
 			}
 
+			//파라미터 받아와서 teamNo넣기
 			function getParameterByName(name) {
 				name = name.replace(/[\[\]]/g, "\\$&");
 				var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"), results = regex
@@ -184,19 +172,19 @@
 
 		<div id="reply-area">
 
+
 			<table border="1" align="center">
-				<tbody>
+				<thead>
+				<!-- 
 					<tr>
 						<th>223</th>
 						<td><textarea id="replyContent" cols="50" rows="3"
 								style="resize: none;"></textarea></td>
 						<td>24/05/17</td>
 					</tr>
-				</tbody>
-			</table>
-
-			<table border="1" align="center">
+					 -->
 				<thead>
+				<tbody>
 					<tr>
 						<th>${ loginUser.nickName }</th>
 						<c:choose>
@@ -212,7 +200,7 @@
 							</c:otherwise>
 						</c:choose>
 					</tr>
-				</thead>
+				</tbody>
 				<tbody>
 
 				</tbody>
@@ -220,10 +208,73 @@
 
 			<br> <br> <br> <br>
 		</div>
-		<div></div>
-		<button>팀 수정</button>
-		<button>팀 삭제</button>
 	</div>
+	<script>
+	
+		
+			function selectTeamBoard(){
+				
+				// Servlet요청 AJAX로 보내서 조회해올건데
+				
+				$.ajax({
+					url : 'teamboardSelect',
+					data :{
+							boardCode :
+						}
+					success : function(result){
+						//console.log(result);
+						
+						let resultStr = '';
+						for(let i in result){
+							
+							resultStr += '<tr>'
+									   + '<td>' + result[i].memberNo + '</td>'
+									   + '<td>' + result[i].replyContent + '</td>'
+									   + '<td>' + result[i].createDate + '</td>'
+									   + '</tr>'
+						};
+						$('#reply-area thead').html(resultStr);
+						
+					},
+					error : function(e){
+						console.log(e);
+					}
+					
+				});
+				
+			}
+		
+		
+			$(function(){
+			
+				selectReplyList();
+				
+				setInterval(selectReplyList, 1000);
+				
+			});
+		
+			function insertReply(){
+				
+				$.ajax({
+					url:'replyInsert.do',
+					type : 'post',
+					data : {
+						content : $('#replyContent').val(),
+						boardNo : <%= board.getBoardNo() %>
+					},
+					success : function(result){
+						//console.log(result);
+						
+						if(result == 'success'){
+							$('#replyContent').val('');
+							selectReplyList();
+						};
+					}
+					
+				});
+				
+			}
+	</script>
 
 
 </body>

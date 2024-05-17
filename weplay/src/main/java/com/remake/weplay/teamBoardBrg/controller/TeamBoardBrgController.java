@@ -2,7 +2,10 @@ package com.remake.weplay.teamBoardBrg.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.remake.weplay.teamBoardBrg.model.service.TeamBoardBrgService;
@@ -14,6 +17,20 @@ public class TeamBoardBrgController {
 	@Autowired
 	private TeamBoardBrgService teamBoardBrgService;
 
+	/***
+	 * 팀브릿지 전체조회
+	 * @param teamNo
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("teamBoard.teamBoard")
+	public String selectList(@RequestParam(value="teamNo")int teamNo,Model model) {
+		// /WEB-INF/views/member/myPage.jsp
+		model.addAttribute("list", teamBoardBrgService.selectList(teamNo));
+		
+		return "teamBoard/teamBoard";
+	}
+	
 	/**
 	 * 팀보드브릿지 삽입
 	 * @param teamBoardBrg

@@ -39,11 +39,32 @@
 		.page-link:hover{
 			cursor: pointer;
 		}
+		
+		.modal-body {
+        	display: flex;
+        }
+        #modal-logo{
+        	width: 40%;
+        	height: 100%;
+        	> img{
+        		width: 100%;
+        		height: 100%;
+        	}
+        }
+        #modal-text{
+        	width: 60%;
+        	> textarea{
+        		width: 100%;
+        		height: 100%;
+        	}
+        }
     </style>
 </head>
 <body>
 	
 	<jsp:include page="../common/header.jsp"/>
+	
+	<script src="resources/js/team/team.js"></script>
 
     <div id="outer">
         <div id="search-area">
@@ -117,11 +138,8 @@
     		$('#teams-area tbody').on('click', '.team-tr', function() {
     			location.href = 'teamInfo?teamNo=' + $(this).find('.teamNo').val();
     		})
-    			
-    		
     		
     	});
-    	
     	
     	function selectCities(){ // 시도 셀렉트 옵션 조회
     		$.ajax({
@@ -234,7 +252,7 @@
     		}
     		const td = document.createElement('td');
     		td.innerHTML = '<button class="btn btn-sm btn-success apply-match">경기신청</button>'
-    					 + '<button class="btn btn-sm btn-primary apply-join">가입신청</button>';
+    					 + '<button class="btn btn-sm btn-primary apply-join" data-toggle="modal" data-target="#ApplyJoinModal">가입신청</button>';
     		teamTr.appendChild(td);
     		
     		return teamTr;
@@ -274,6 +292,37 @@
     		return pageUl;
     	}
     </script>
+    
+    <!-- The Modal -->
+	<div class="modal" id="ApplyJoinModal">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	
+	      <!-- Modal Header -->
+	      <div class="modal-header">
+	        <h4 class="modal-title">${ team.teamName } 가입 신청</h4>
+	        <button type="button" class="close" data-dismiss="modal">&times;</button>
+	      </div>
+	
+	      <!-- Modal body -->
+	      <div class="modal-body">
+	      	<div id="modal-logo">
+	      		<img src="${ team.teamLogo }">
+	      	</div>
+	        <div id="modal-text">
+		        <textarea placeholder="신청 사유 또는 간단한 자기소개를 입력해주세요.."></textarea>
+	        </div>
+	      </div>
+	
+	      <!-- Modal footer -->
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-dark" data-dismiss="modal">취소</button>
+	        <button type="button" id="apply-join" class="btn btn-success" data-dismiss="modal">가입 신청</button>
+	      </div>
+	
+	    </div>
+	  </div>
+	</div>
     
 </body>
 </html>

@@ -35,6 +35,7 @@
         }
         #search-team-btn{
             float: inline-end;
+            margin-right: 10%;
         }
         #home-team, #away-team{
             width: 35%;
@@ -66,7 +67,7 @@
             <div><h2>VS</h2></div>
             <div id="away-team"><h2>FC 경실련</h2></div>
         </div>
-        <button id="search-team-btn">상대팀 검색</button>
+        <button id="search-team-btn" class="btn btn-sm btn-danger">상대팀 검색</button>
         <form action="" method="post" id="match-form">
             
             <label for="matchDate">경기 희망일시 : </label>
@@ -80,12 +81,12 @@
             <br>
             <button type="button" class="btn btn-outline-primary">경기장 검색</button>
             <br>
-            <span>경기장 : </span><b id="fieldName">종로구 한강다목적운동장</b> <br>
-            <span>위치 : </span><b id="location">서울 종로구</b> <br>
-            <span>정보 : </span><b id="fieldInfo">90m X 62m | 천연잔디</b> <br>
+            <span>경기장 : </span><b id="fieldName">선택 안함</b> <br>
+            <span>위치 : </span><b id="location">--</b> <br>
+            <span>정보 : </span><b id="fieldInfo">--</b> <br>
             <br>
-            <label for="applyName">신청자명 : </label><input type="text" name="applyName" id="applyName"> <br>
-            <label for="applyPhone">전화번호 : </label><input type="text" name="applyPhone" id="applyPhone"> <br>
+            <label for="applyName">신청자명 : </label><input type="text" name="applyName" id="applyName" placeholder="본명 입력" required> <br>
+            <label for="applyPhone">전화번호 : </label><input type="text" name="applyPhone" id="applyPhone" placeholder="010-0000-0000" required> <br>
             <textarea name="applyContent" placeholder="신청 사유 / 추가 정보를 입력해주세요."></textarea> <br>
             <br>
             <button type="button" class="btn btn-secondary">취소</button>

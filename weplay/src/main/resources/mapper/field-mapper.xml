@@ -13,9 +13,6 @@
 		<result column="WIDTH" 		property="width" />
 		<result column="LENGTH" 	property="length" />
 		<result column="BUILT_YEAR" property="builtYear" />
-		<result column="ADDRESS" 	property="address" />
-		<result column="LAT" 		property="lat" />
-		<result column="LNG" 		property="lng" />
 	</resultMap>
 	
 	<select id="selectFields" resultMap="fieldResultMap">
@@ -27,10 +24,7 @@
 			   GROUND,
 			   WIDTH,
 			   LENGTH,
-			   BUILT_YEAR,
-			   ADDRESS,
-			   LAT,
-			   LNG
+			   BUILT_YEAR
 	      FROM
 	           FIELD
 	     ORDER

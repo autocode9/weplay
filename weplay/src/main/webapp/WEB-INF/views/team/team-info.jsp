@@ -6,8 +6,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
     <title>WEPLAY:TeamInfo</title>
-
+	
     <style>
         #outer{
             width:80%;
@@ -72,6 +73,8 @@
 
 	<jsp:include page="../common/header.jsp"/>
 	
+	<script src="resources/js/team/team.js"></script>
+	
     <div id="outer">
         <div id="info-area">
             <div id="logo-area" class="content-box">
@@ -112,7 +115,7 @@
             <button onclick="history.back()" class="btn btn-info">뒤로가기</button>
         </div>
     </div>
-    
+    <!-- 
     <script>
     	$(() => {
     		if($('#memberTeamNo').val() != '0'){
@@ -158,7 +161,7 @@
 	    	});
     	});
     </script>
-    
+    -->
     <!-- The Modal -->
 	<div class="modal" id="ApplyJoinModal">
 	  <div class="modal-dialog">

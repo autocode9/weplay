@@ -14,7 +14,6 @@
             padding-top: 2%;
             background-color: white;
         }
-
         #search-area{
             width: 100%;
             text-align: center;
@@ -33,6 +32,9 @@
         #teams-area{
         	padding-left: 2%;
         	padding-right: 2%;
+        }
+        #teams-area tbody > tr:hover{
+        	cursor: pointer;
         }
 		.page-link:hover{
 			cursor: pointer;

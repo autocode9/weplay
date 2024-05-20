@@ -19,7 +19,11 @@ public interface TeamService {
 	int applyCheck(TeamApplication teamApp);
 	
 	int joinTeam(TeamApplication teamApp);
-
-
+	
+	//팀 신청자 목록
+	List<TeamApplication> selectTeamApplication(int teamNo);
+	
+	
+	
 
 }

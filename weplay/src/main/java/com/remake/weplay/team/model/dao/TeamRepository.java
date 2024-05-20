@@ -33,5 +33,8 @@ public class TeamRepository {
 		return sqlSession.insert("teamApplicationMapper.joinTeam", teamApp);
 	}
 
+	public List<TeamApplication> selectTeamApplication(SqlSessionTemplate sqlSession, int teamNo) {
+		return sqlSession.selectList("teamApplicationMapper.selectTeamApplication", teamNo);
+	}
 
 }

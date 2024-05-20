@@ -44,6 +44,12 @@ public class TeamServiceImpl implements TeamService {
 	public int joinTeam(TeamApplication teamApp) {
 		return teamRepository.joinTeam(sqlSession, teamApp);
 	}
+	
+	//팀 신청자 목록
+	@Override
+	public List<TeamApplication> selectTeamApplication(int teamNo) {
+		return teamRepository.selectTeamApplication(sqlSession, teamNo);
+	}
 
 
 

@@ -122,7 +122,7 @@
 							<c:when test="${not empty sessionScope.loginUser }">
 								<td><textarea id="content" cols="50" rows="3"
 										style="resize: none;"></textarea></td>
-								<td><button class="btn btn-sm btn-primary" onclick="addteamBoard();">글 등록</button></td>
+								<td><button class="btn btn-sm btn-primary" onclick="addteamBoard(); reselectTeamBoard();">글 등록</button></td>
 							</c:when>
 							<c:otherwise>
 								<td><textarea readonly cols="50" rows="3"
@@ -209,14 +209,13 @@
     // 팀 보드 선택
     function selectTeamBoard(element) {
         var selectedBoardCode = $(element).closest('tr').find('.boardCode').text();
-        boardCode = selectedBoardCode;
         $.ajax({
             url: 'teamboardSelect',
             data: {
-                boardCode: boardCode
+                boardCode: selectedBoardCode
             },
             success: function (result) {
-                console.log(boardCode);
+                console.log(selectedBoardCode);
 
                 let resultStr = '';
                 for (let i in result) {
@@ -252,7 +251,6 @@
                     if (result === 'success') {
                         $('#content').val('');
                         alert("게시글이 성공적으로 등록되었습니다");
-                        location.reload();
                     }
                 }
 
@@ -262,7 +260,32 @@
         }
     }
     //팀보드 재셀렉트
-    
+    function reselectTeamBoard() {
+    	var boardCode =$('#selBoardCode').val();
+        $.ajax({
+            url: 'teamboardSelect',
+            data: {
+                boardCode: boardCode
+            },
+            success: function (result) {
+            	 console.log(boardCode);
+
+                let resultStr = '';
+                for (let i in result) {
+                    resultStr += '<tr>' +
+                        '<td>' + result[i].nickName + '</td>' +
+                        '<td>' + result[i].content + '</td>' +
+                        '<td>' + result[i].createDate + '</td>' +
+                        '</tr>';
+                }
+                $('#boardSelect-area thead').html(resultStr);
+            },
+            error: function (e) {
+                console.log(e);
+            }
+        });
+    }
+       
 </script>
 	
 </body>

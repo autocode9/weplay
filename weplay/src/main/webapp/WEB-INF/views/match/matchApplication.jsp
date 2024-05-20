@@ -67,7 +67,7 @@
             <div><h2>VS</h2></div>
             <div id="away-team"><h2>FC 경실련</h2></div>
         </div>
-        <button id="search-team-btn" class="btn btn-sm btn-danger">상대팀 검색</button>
+        <button id="search-team-btn" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#teamModal">상대팀 검색</button>
         <form action="" method="post" id="match-form">
             
             <label for="matchDate">경기 희망일시 : </label>
@@ -79,7 +79,7 @@
                 <option value="40">40분</option>
             </select>
             <br>
-            <button type="button" class="btn btn-outline-primary">경기장 검색</button>
+            <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#fieldModal">경기장 검색</button>
             <br>
             <span>경기장 : </span><b id="fieldName">선택 안함</b> <br>
             <span>위치 : </span><b id="location">--</b> <br>
@@ -97,6 +97,92 @@
 
     </div>
     
+    <!-- fieldModal -->
+	<div class="modal" id="fieldModal">
+		<div class="modal-dialog">
+		    <div class="modal-content">
+		
+			      <!-- Modal Header -->
+			    <div class="modal-header">
+				    <h4 class="modal-title">경기장 검색</h4>
+				    <button type="button" class="close" data-dismiss="modal">&times;</button>
+			    </div>
+			
+			    <!-- Modal body -->
+			    <div class="modal-body">
+			        <div>
+			            <b>지역 : </b>
+			            <label for="sido">시도:</label>
+			            <select id="sido">
+							<option value="all" selected>전체</option>
+			            </select>
+			            <label for="sigungu">시군구:</label>
+			            <select id="sigungu">
+			                <option value="all" selected>전체</option>
+			            </select>
+			            <br>
+			        	<input type="text" id="keyword" placeholder="검색어 입력"/>
+			        	<button class="btn btn-sm btn-dark">검색</button>
+			        </div>
+			        <div>
+			        
+			        
+			        
+			        </div>
+			    </div>
+			
+			    <!-- Modal footer -->
+			    <div class="modal-footer">
+		        	<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+		      	</div>
+		
+		    </div>
+		</div>
+	</div>
+	
+	<!-- teamModal -->
+	<div class="modal" id="teamModal">
+		<div class="modal-dialog">
+		    <div class="modal-content">
+		
+			      <!-- Modal Header -->
+			    <div class="modal-header">
+				    <h4 class="modal-title">경기장 검색</h4>
+				    <button type="button" class="close" data-dismiss="modal">&times;</button>
+			    </div>
+			
+			    <!-- Modal body -->
+			    <div class="modal-body">
+			        <div>
+			        	<b>지역 : </b>
+			            <label for="sido">시도:</label>
+			            <select id="sido">
+							<option value="all" selected>전체</option>
+			            </select>
+			            <label for="sigungu">시군구:</label>
+			            <select id="sigungu">
+			                <option value="all" selected>전체</option>
+			            </select>
+			            <br>
+			        	<input type="text" id="keyword" placeholder="검색어 입력"/>
+			        	<button class="btn btn-sm btn-dark">검색</button>
+			        
+			        </div>
+			        <div>
+			        
+			        
+			        
+			        </div>
+			    </div>
+			
+			    <!-- Modal footer -->
+			    <div class="modal-footer">
+		        	<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+		      	</div>
+		
+		    </div>
+		</div>
+	</div>
 
     
 </body>

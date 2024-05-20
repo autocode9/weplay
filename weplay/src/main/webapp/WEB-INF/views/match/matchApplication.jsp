@@ -56,7 +56,7 @@
 
 	<jsp:include page="../common/header.jsp"/>
 	
-	<script src="resources/js/common/pagination.js"></script>
+	<script src="resources/js/common/city-district-select.js"></script>
 	
     <div id="outer">
         <div id="match-header">
@@ -65,15 +65,18 @@
             <h3 style="color:rgb(231, 76, 60);">AWAY</h3>
         </div>
         <div id="match-team">
-            <div id="home-team"><h2>리메이크 FC</h2></div>
+        	<input type="hidden" id="home-teamNo" value="${ homeTeam.teamNo }">
+            <div id="home-team"><h2>${ homeTeam.teamName }</h2></div>
             <div><h2>VS</h2></div>
-            <div id="away-team"><h2>FC 경실련</h2></div>
+            <input type="hidden" id="away-teamNo" value="${ awayTeam.teamNo }">
+            <div id="away-team"><h2><c:out value="${ awayTeam.teamName }" default="선택 안함"/></h2></div>
         </div>
         <button id="search-team-btn" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#teamModal">상대팀 검색</button>
         <form action="" method="post" id="match-form">
             
             <label for="matchDate">경기 희망일시 : </label>
             <input type="date" name="matchDate" id="matchDate"/>
+            <input type="time" name="matchDateTime" id="matchDateTime"/>
             <label for="matchTime">경기 시간 : </label>
             <select name="matchTime" id="matchTime">
                 <option value="90">90분</option>
@@ -88,7 +91,7 @@
             <span>정보 : </span><b id="fieldInfo">--</b> <br>
             <br>
             <label for="applyName">신청자명 : </label><input type="text" name="applyName" id="applyName" placeholder="본명 입력" required> <br>
-            <label for="applyPhone">전화번호 : </label><input type="text" name="applyPhone" id="applyPhone" placeholder="010-0000-0000" required> <br>
+            <label for="applyPhone">전화번호 : </label><input type="text" name="applyPhone" id="applyPhone" value="${ loginUser.phone }" placeholder="010-0000-0000" required> <br>
             <textarea name="applyContent" placeholder="신청 사유 / 추가 정보를 입력해주세요."></textarea> <br>
             <br>
             <button type="button" class="btn btn-secondary">취소</button>
@@ -113,17 +116,13 @@
 			    <!-- Modal body -->
 			    <div class="modal-body">
 			        <div>
-			            <b>지역 : </b>
-			            <label for="city">시도:</label>
-			            <select id="city" class="sido">
-							<option value="all" selected>전체</option>
-			            </select>
-			            <label for="district">시군구:</label>
-			            <select id="district" class="sigungu">
+			            <label for="district">카테고리:</label>
+			            <select id="district">
 			                <option value="all" selected>전체</option>
+			                <option value="fieldName" selected>경기장명</option>
+			                <option value="location" selected>지역</option>
 			            </select>
-			            <br>
-			        	<input type="text" id="keyword" placeholder="팀명 검색"/>
+			        	<input type="text" id="keyword" placeholder="검색어 입력"/>
 			        	<button class="btn btn-sm btn-dark">검색</button>
 			        </div>
 			        <div>
@@ -158,11 +157,11 @@
 			        <div>
 			        	<b>지역 : </b>
 			            <label for="sido">시도:</label>
-			            <select id="sido" class="sido">
+			            <select id="sido">
 							<option value="all" selected>전체</option>
 			            </select>
 			            <label for="sigungu">시군구:</label>
-			            <select id="sigungu" class="sigungu">
+			            <select id="sigungu">
 			                <option value="all" selected>전체</option>
 			            </select>
 			            <br>
@@ -207,115 +206,161 @@
 		    </div>
 		</div>
 	</div>
-
+	
 	<script>
+		let page = 1;
 		$(() => {
 			selectCities();
-			selectTeams(1);
-		})
-		
-		const optionAll = '<option value="all" selected>전체</option>';
-		
-		function selectCities(){ // 시도 셀렉트 옵션 조회
-			$.ajax({
-				url : 'city',
-				type : 'get',
-				success : city => {
-					let options = optionAll;
-					for(let i in city){
-						options += '<option value="' + city[i].sido + '">' + city[i].sido + '</option>';
-					}
-					$('.sido').html(options);
+			selectTeams(page);
+			
+			// 시도 선택시 시도에 맞는 시군구를 가져옴
+			$('#sido').change(() => { 
+				if($('#sido').val() != 'all' && $('#sido').val() != '세종'){
+					selectDistricts();
 				}
+				else{
+					$('#sigungu').html(optionAll);
+				}
+				selectTeams(page);
 			});
-		} // selectLocation() End
-		
-		function selectDistricts(){ //시군구 셀렉트 옵션 조회
-			$.ajax({
-				url : 'city/' + $('.sido').val(),
-				type : 'get',
-				success : district => {
-					let options = optionAll;
-					for(let i in district){
-						options += '<option value"' + district[i].sigungu + '">' + district[i].sigungu + '</option>';
-					}
-					$('.sigungu').html(options);
-				}
+			$('#sigungu').change(() => { 
+				selectTeams(page);
+			});
+			
+			$('#searchByKeyword').click(() => {
+				selectTeams(page);
+			});
+			
+			$('#teams-area tbody').on('click', '.chooseTeam', function() {
+				const $teamTds = $(this).parent().parent().children();
 				
+				$('#away-teamNo').val($teamTds.eq(0).val());
+				$('#away-team').html('<h2>' + $teamTds.eq(2).text() + '</h2>');
+			})
+			
+		});
+	
+		function selectTeams(page){ // 팀 목록 조회	
+			$.ajax({
+				url : 'teams/' + page,
+				type : 'get',
+				data : {
+					sido : $('#sido').val(),
+					sigungu : $('#sigungu').val(),
+					keyword : $('#keyword').val()
+				},
+				success : result => {
+					const pageInfo = result[0];
+					const teams = result[1];
+					
+					$('#result-area').html(createResultStr(pageInfo.listCount));
+	
+					if(teams.length == 0){
+						const teamTrEmpty = '<tr><td colspan="9">조회된 팀이 없습니다.</td></tr>';
+						$('#teams-area tbody').html(teamTrEmpty);
+						$('#page-area').html('');
+					}
+					else{
+						$('#teams-area tbody').html('');
+						for(let i in teams){
+							const teamTr = createTeamTr(teams[i]);
+							$('#teams-area tbody').append(teamTr);
+						}
+						const pageUl = pagination(pageInfo);
+						
+						$('#page-area').html(pageUl);
+						
+					}
+				}
 			});
 		}
-		
-		$('.sido').change(() => { 
-			if($('.sido').val() != 'all' && $('.sido').val() != '세종'){
-				selectDistricts();
+	
+		function createResultStr(listCount){
+			const $keyword = $('#keyword').val();
+			const $sido = $('#sido').val();
+			const $sigungu = $('#sigungu').val();
+			
+			let result = '';
+			if($keyword == ''){
+				result = '조회 결과 : ';
 			}
 			else{
-				$('.sigungu').html(optionAll);
+				result = '<b>' + $keyword + '</b> 검색 결과 : ';
 			}
-		});
-		
-		function selectTeams(page){ // 팀 목록 조회	
-    		$.ajax({
-    			url : 'teams/' + page,
-    			type : 'get',
-    			data : {
-    				sido : $('#sido').val(),
-    				sigungu : $('#sigungu').val(),
-    				keyword : $('#keyword').val()
-    			},
-    			success : result => {
-    				const pageInfo = result[0];
-    				const teams = result[1];
-   
-    				if(teams.length == 0){
-    					const teamTrEmpty = '<tr><td colspan="9">조회된 팀이 없습니다.</td></tr>';
-    					$('#teams-area tbody').html(teamTrEmpty);
-    					$('#page-area').html('');
-    				}
-    				else{
-    					$('#teams-area tbody').html('');
-    					for(let i in teams){
-    						const teamTr = createTeamTr(teams[i]);
-    						$('#teams-area tbody').append(teamTr);
-    					}
-    					const pageUl = pagination(pageInfo);
-						
-    					$('.page-area').html(pageUl);
-    				}
-    			}
-    		});
-    	}
-
+			result += '<b>' + listCount + '</b>팀';
+	
+			if($sido != 'all' && $sigungu == 'all'){
+				result += '(' + $sido + ')';
+			}
+			else if($sigungu != 'all' && $sigungu != 'all'){
+				result += '(' + $sido + ' ' + $sigungu + ')';
+			}
+			return result;
+		}
+	
 		function createTeamTr(team){ // 팀 테이블 행 생성 메소드
-    		const teamTr = document.createElement('tr');
-    		teamTr.setAttribute("class", "team-tr");
-    	
-    		const keys = Object.keys(team);
-    			
-    		for (let i in keys) {
-    			const key = keys[i] // 각각의 키
-    			const value = team[key] // 각각의 키에 해당하는 각각의 값
-    			
-    			if(i == 0){ // teamNo => input:hidden
-    				const teamNo = document.createElement("input");
-    				teamNo.setAttribute("class", "teamNo");
-    				teamNo.setAttribute("type", "hidden");
-    				teamNo.setAttribute("value", value);
+			const teamTr = document.createElement('tr');
+			teamTr.setAttribute("class", "team-tr");
+	
+			const keys = Object.keys(team);
+				
+			for (let i in keys) {
+				const key = keys[i] // 각각의 키
+				const value = team[key] // 각각의 키에 해당하는 각각의 값
+				
+				if(i == 0){ // teamNo => input:hidden
+					const teamNo = document.createElement("input");
+					teamNo.setAttribute("class", "teamNo");
+					teamNo.setAttribute("type", "hidden");
+					teamNo.setAttribute("value", value);
 					teamTr.appendChild(teamNo);
-	    		}
-	    		else{
-	    			const td = document.createElement('td');
-	    			td.innerText = value;
-	    			teamTr.appendChild(td);
-    			}
-    		}
-    		const td = document.createElement('td');
-    		td.innerHTML = '<button class="btn btn-sm btn-success chooseTeam">선택</button>';
-    		teamTr.appendChild(td);
-    		
-    		return teamTr;
-    	}
-
+				}
+				else{
+					const td = document.createElement('td');
+					td.innerText = value;
+					teamTr.appendChild(td);
+				}
+			}
+			const td = document.createElement('td');
+			td.innerHTML = '<button type="button" class="btn btn-sm btn-success chooseTeam" data-dismiss="modal">선택</button>';
+			teamTr.appendChild(td);
+			
+			return teamTr;
+		}
+	
+		function pagination(pageInfo){ // 페이징 처리
+		    		
+		    const pageUl = document.createElement('ul');
+		    pageUl.setAttribute("class", "pagination justify-content-center");
+		    		
+		    const moveLi = document.createElement('li');
+		    moveLi.setAttribute("class", "page-item");
+		    
+		    if(pageInfo.currentPage != 1){
+		    	moveLi.innerHTML = '<a class="page-link" onclick="selectTeams(' + (pageInfo.currentPage - 1) + ');">이전</a>';
+		  		pageUl.appendChild(moveLi);
+		    }
+		    
+		    for(let i = 1; i <= pageInfo.endPage; i++){
+		  		
+		  	const pageLi = document.createElement('li');
+		    	if(i == pageInfo.currentPage){
+		  			pageLi.setAttribute("class", "page-item active");
+		    	}
+		    	else{
+		    		pageLi.setAttribute("class", "page-item");
+		    	}
+		  		pageLi.innerHTML = '<a class="page-link" onclick="selectTeams(' + i + ');">' + i + '</a>';
+		  		pageUl.appendChild(pageLi);
+		    }
+		    
+		    if(pageInfo.maxPage > pageInfo.currentPage){
+		    	moveLi.innerHTML = '<a class="page-link" onclick="selectTeams(' + (pageInfo.currentPage + 1) + ');">다음</a>';
+		  		pageUl.appendChild(moveLi);
+		    }
+		    
+		    return pageUl;
+		}
 	</script>
     
 </body>

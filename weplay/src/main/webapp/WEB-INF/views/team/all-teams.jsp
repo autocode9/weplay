@@ -64,7 +64,8 @@
 	
 	<jsp:include page="../common/header.jsp"/>
 	
-	<script src="resources/js/common/pagination.js"></script>
+	<script src="resources/js/team/teamList.js"></script>
+	<script src="resources/js/common/city-district-select.js"></script>
 
     <div id="outer">
         <div id="search-area">
@@ -109,157 +110,7 @@
         </div> <!-- #teams-area -->
 
     </div> <!-- #outer -->
-    
-    <script>
-    	const optionAll = '<option value="all" selected>전체</option>';
-    	let page = 1;
-    	$(() => {
-    		selectCities();
-    		selectTeams(page);
-    		
-    		// 시도 선택시 시도에 맞는 시군구를 가져옴
-    		$('#sido').change(() => { 
-    			if($('#sido').val() != 'all' && $('#sido').val() != '세종'){
-    				selectDistricts();
-    			}
-    			else{
-    				$('#sigungu').html(optionAll);
-    			}
-    			selectTeams(page);
-    		});
-    		$('#sigungu').change(() => { 
-    			selectTeams(page);
-    		});
-    		
-    		$('#searchByKeyword').click(() => {
-    			selectTeams(page);
-    		});
-    		
-    		$('#teams-area tbody').on('click', '.team-tr', function() {
-    			location.href = 'teamInfo?teamNo=' + $(this).find('.teamNo').val();
-    		})
-    		
-    	});
-    	
-    	function selectCities(){ // 시도 셀렉트 옵션 조회
-    		$.ajax({
-    			url : 'city',
-    			type : 'get',
-    			success : city => {
-    				let options = optionAll;
-    				for(let i in city){
-    					options += '<option value="' + city[i].sido + '">' + city[i].sido + '</option>';
-    				}
-    				$('#sido').html(options);
-    			}
-    		});
-    	} // selectLocation() End
-    	
-    	function selectDistricts(){ //시군구 셀렉트 옵션 조회
-    		$.ajax({
-    			url : 'city/' + $('#sido').val(),
-    			type : 'get',
-    			success : district => {
-    				let options = optionAll;
-    				for(let i in district){
-    					options += '<option value"' + district[i].sigungu + '">' + district[i].sigungu + '</option>';
-    				}
-    				$('#sigungu').html(options);
-    			}
-    			
-    		});
-    	}
-    	
-    	function selectTeams(page){ // 팀 목록 조회	
-    		$.ajax({
-    			url : 'teams/' + page,
-    			type : 'get',
-    			data : {
-    				sido : $('#sido').val(),
-    				sigungu : $('#sigungu').val(),
-    				keyword : $('#keyword').val()
-    			},
-    			success : result => {
-    				const pageInfo = result[0];
-    				const teams = result[1];
-    				
-    				$('#result-area').html(createResultStr(pageInfo.listCount));
-   
-    				if(teams.length == 0){
-    					const teamTrEmpty = '<tr><td colspan="9">조회된 팀이 없습니다.</td></tr>';
-    					$('#teams-area tbody').html(teamTrEmpty);
-    					$('#page-area').html('');
-    				}
-    				else{
-    					$('#teams-area tbody').html('');
-    					for(let i in teams){
-    						const teamTr = createTeamTr(teams[i]);
-    						$('#teams-area tbody').append(teamTr);
-    					}
-						const pageUl = pagination(pageInfo);
-						
-    					$('#page-area').html(pageUl);
-    					
-    				}
-    			}
-    		});
-    	}
-    	
-    	function createResultStr(listCount){
-    		const $keyword = $('#keyword').val();
-    		const $sido = $('#sido').val();
-    		const $sigungu = $('#sigungu').val();
-    		
-    		let result = '';
-			if($keyword == ''){
-				result = '조회 결과 : ';
-			}
-			else{
-				result = '<b>' + $keyword + '</b> 검색 결과 : ';
-			}
-			result += '<b>' + listCount + '</b>팀';
 
-			if($sido != 'all' && $sigungu == 'all'){
-				result += '(' + $sido + ')';
-			}
-			else if($sigungu != 'all' && $sigungu != 'all'){
-				result += '(' + $sido + ' ' + $sigungu + ')';
-			}
-			return result;
-    	}
-    	
-    	function createTeamTr(team){ // 팀 테이블 행 생성 메소드
-    		const teamTr = document.createElement('tr');
-    		teamTr.setAttribute("class", "team-tr");
-    	
-    		const keys = Object.keys(team);
-    			
-    		for (let i in keys) {
-    			const key = keys[i] // 각각의 키
-    			const value = team[key] // 각각의 키에 해당하는 각각의 값
-    			
-    			if(i == 0){ // teamNo => input:hidden
-    				const teamNo = document.createElement("input");
-    				teamNo.setAttribute("class", "teamNo");
-    				teamNo.setAttribute("type", "hidden");
-    				teamNo.setAttribute("value", value);
-					teamTr.appendChild(teamNo);
-	    		}
-	    		else{
-	    			const td = document.createElement('td');
-	    			td.innerText = value;
-	    			teamTr.appendChild(td);
-    			}
-    		}
-    		const td = document.createElement('td');
-    		td.innerHTML = '<button class="btn btn-sm btn-success apply-match">경기신청</button>'
-    					 + '<button class="btn btn-sm btn-primary apply-join" data-toggle="modal" data-target="#ApplyJoinModal">가입신청</button>';
-    		teamTr.appendChild(td);
-    		
-    		return teamTr;
-    	}
-    	
-    </script>
     
     <!-- The Modal -->
 	<div class="modal" id="ApplyJoinModal">

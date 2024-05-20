@@ -1,7 +1,9 @@
 package com.remake.weplay.field.model.service;
 
+import java.util.HashMap;
 import java.util.List;
 
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,8 +20,15 @@ public class FieldServiceImpl implements FieldService {
 	private SqlSessionTemplate sqlSession;
 	
 	@Override
-	public List<Field> selectFields() {
-		return fieldRepository.selectFields(sqlSession);
+	public int countFields(HashMap<String, String> map) {
+		return fieldRepository.countFields(sqlSession, map);
 	}
+	
+	@Override
+	public List<Field> selectFields(HashMap<String, String> map, RowBounds rowBounds) {
+		return fieldRepository.selectFields(sqlSession, map, rowBounds);
+	}
+	
+
 
 }

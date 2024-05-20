@@ -13,11 +13,9 @@ public class Field {
 	
 	private int fieldNo;
 	private String fieldName;
-	private String city;
-	private String district;
+	private String location;
 	private String ground;
-	private String width;
-	private String length;
+	private String size;
 	private String builtYear;
 	
 }

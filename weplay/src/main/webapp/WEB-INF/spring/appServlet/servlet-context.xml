@@ -25,7 +25,7 @@
 	
 	<interceptors>
 		<interceptor>
-			<mapping path="matchApplicationForm"/>
+			<mapping path="/matchApplicationForm"/>
 			<beans:bean class="com.remake.weplay.commons.interceptor.LoginInterceptor" id="loginInterceptor"/>
 		</interceptor>
 	</interceptors>

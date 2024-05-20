@@ -95,7 +95,7 @@
 
 
 			<div></div>
-			<button class="btn btn-sm btn-primary">팀 수정</button>
+             <button class="btn btn-sm btn-primary" onclick="teamManage()">팀 관리</button>
 			<button class="btn btn-sm btn-danger">팀 삭제</button>
 		</div>
 
@@ -210,7 +210,7 @@
     function selectTeamBoard(element) {
         var selectedBoardCode = $(element).closest('tr').find('.boardCode').text();
         $.ajax({
-            url: 'teamboardSelect',
+            url: 'teamBoardSelect',
             data: {
                 boardCode: selectedBoardCode
             },
@@ -237,7 +237,7 @@
     function addteamBoard() {
         if ($('#content').val().trim() != '') {
             $.ajax({
-                url: 'teamboardinsert',
+                url: 'teamBoardInsert',
                 data: {
                     boardCode: $('#selBoardCode').val(),
                     content: $('#content').val(),
@@ -263,7 +263,7 @@
     function reselectTeamBoard() {
     	var boardCode =$('#selBoardCode').val();
         $.ajax({
-            url: 'teamboardSelect',
+            url: 'teamBoardSelect',
             data: {
                 boardCode: boardCode
             },
@@ -285,7 +285,13 @@
             }
         });
     }
-       
+    
+	//파라미터 그대로 바꾸기   
+    const teamManage = () => {
+	    const currentUrl = window.location.href; // 현재 페이지의 URL 가져오기
+	    const newUrl = currentUrl.replace("teamBoard.teamBoard", "approveList.do"); // URL에서 teamInfo를 teamBoard.teamBoard로 변경
+	    window.location.href = newUrl; // 새로운 URL로 이동
+	};
 </script>
 	
 </body>

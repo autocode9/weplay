@@ -28,7 +28,7 @@ public class TeamBoardController {
 	
 	
 	@ResponseBody
-	@GetMapping(value="teamboardSelect", produces="applcation/json; charset=UTF-8")
+	@GetMapping(value="teamBoardSelect", produces="applcation/json; charset=UTF-8")
 	public String selectBoardList(int boardCode) {
 		System.out.println(boardCode);
 		
@@ -40,7 +40,7 @@ public class TeamBoardController {
 
 	
 	@ResponseBody
-	@PostMapping("teamboardinsert")
+	@PostMapping("teamBoardInsert")
 	public String insertBoard(TeamBoard teamBoard) {
 		return teamBoardService.insertTeamBoard(teamBoard)>0 ? "success" : "fail";
 	}

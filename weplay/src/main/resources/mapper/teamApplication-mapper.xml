@@ -3,6 +3,16 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="teamApplicationMapper">
+	<resultMap type="teamApplication" id="teamApplicationResultSet">
+		<result column="TA.APPLY_NO" property="applyNo" />
+		<result column="TA.MEMBER_NO" property="memberNo" />
+		<result column="TA.TEAM_NO" property="teamNo" />
+		<result column="TA.APPLY_CONTENT" property="applyContent" />
+		<result column="TA.APPLY_DATE" property="applyDate" />
+		<result column="TA.STATUS" property="status" />
+		<result column="M.NICKNAME" property="nickName" />
+	</resultMap>
+	
 	
 	<select id="applyCheck" parameterType="teamApplication" resultType="_int">
 		SELECT
@@ -23,5 +33,19 @@
 		VALUES
 		(SEQ_TANO.NEXTVAL, #{ memberNo }, #{ teamNo }, #{ applyContent })
 	</insert>
+	
+	<select id="selectTeamApplication" parameterType="_int" resultMap="teamApplicationResultSet">
+	SELECT TA.APPLY_NO,
+		TA.MEMBER_NO,
+		TA.TEAM_NO,
+		TA.APPLY_CONTENT,
+		TA.APPLY_DATE,
+		TA.STATUS,
+		 M.NICKNAME
+	FROM TEAM_APPLICATION TA
+	JOIN MEMBER M ON TA.MEMBER_NO = M.MEMBER_NO
+	WHERE TA.TEAM_NO = #{teamNo}
+	
+	</select>
 	
 </mapper>

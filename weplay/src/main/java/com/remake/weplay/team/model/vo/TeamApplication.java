@@ -17,5 +17,6 @@ public class TeamApplication {
 	private String applyContent;
 	private String applyDate;
 	private String status;
+	private String nickName;
 	
 }

@@ -6,8 +6,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
     <title>WEPLAY:TeamInfo</title>
-
+	
     <style>
         #outer{
             width:80%;
@@ -112,53 +113,7 @@
             <button onclick="history.back()" class="btn btn-info">뒤로가기</button>
         </div>
     </div>
-    
-    <script>
-    	$(() => {
-    		if($('#memberTeamNo').val() != '0'){
-	    		$('.apply-join').attr('disabled', true);
-    			$('.apply-join').addClass('disabled');
-    		}
-    		if($('#memberType').val() != '관리자' && $('#memberType').val() != '창시자'){
-    			$('.apply-match').attr('disabled', true);
-    			$('.apply-match').addClass('disabled');
-    		}
-    		
-	    	$('.apply-join').click(() => {
-	    		$('#modal-text textarea').val('');
-	    	});
-	    	
-	    	$('#apply-join').click(() => {			
-	    		$.ajax({
-	    			url : 'joinTeam',
-	    			type : 'post',
-	    			data : {
-	    				memberNo : $('#memberNo').val(),
-	    				teamNo : $('#teamNo').val(),
-	    				applyContent : $('#modal-text textarea').val()
-	    			},
-	    			success : result => {
-	    				if(result == 'Y'){
-	    					alert('가입 신청 성공!');
-	    				}
-	    				else if(result == 'N'){
-	    					alert('이미 가입 신청을 하셨습니다.');
-	    				}
-	    				else {
-	    					alert('가입 신청 실패..');
-	    				}
-	    			}
-	    		});
-	    	});
-	    	
-			$('.apply-match').click(() => {
-				if(confirm($('#teamName').text() + '와의 경기를 신청하시겠습니까?')){
-					
-				}
-	    	});
-    	});
-    </script>
-    
+   
     <!-- The Modal -->
 	<div class="modal" id="ApplyJoinModal">
 	  <div class="modal-dialog">
@@ -189,6 +144,51 @@
 	    </div>
 	  </div>
 	</div>
+	
+	<script>
+		$(() => {
+		    if($('#memberTeamNo').val() != '0'){
+		        $('.apply-join').attr('disabled', true);
+		        $('.apply-join').addClass('disabled');
+		    }
+		    if($('#memberType').val() != '관리자' && $('#memberType').val() != '창시자'){
+		        $('.apply-match').attr('disabled', true);
+		        $('.apply-match').addClass('disabled');
+		    }
+		    
+		    $('.apply-join').click(() => {
+		        $('#modal-text textarea').val('');
+		    });
+		    
+		    $('#apply-join').click(() => {			
+		        $.ajax({
+		            url : 'joinTeam',
+		            type : 'post',
+		            data : {
+		                memberNo : $('#memberNo').val(),
+		                teamNo : $('#teamNo').val(),
+		                applyContent : $('#modal-text textarea').val()
+		            },
+		            success : result => {
+		                if(result == 'Y'){
+		                    alert('가입 신청 성공!');
+		                }
+		                else if(result == 'N'){
+		                    alert('이미 가입 신청을 하셨습니다.');
+		                }
+		                else {
+		                    alert('가입 신청 실패..');
+		                }
+		            }
+		        });
+		    });
+		    $('.apply-match').click(() => {
+		        if(confirm($('#teamName').text() + '와의 경기를 신청하시겠습니까?')){
+		            location.href = 'matchApplicationForm';
+		        }
+		    });
+		});
+	</script>
 	
 </body>
 </html>

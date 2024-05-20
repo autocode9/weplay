@@ -53,6 +53,7 @@ body {
 	height: 100%;
 	line-height: 55px;
 	text-align: center;
+	z-index: 10;
 }
 
 .navi-top>a {
@@ -75,6 +76,9 @@ body {
 	list-style-type: none;
 	margin: auto;
 	display: none;
+	background-color: black;
+	position: relative; 
+	z-index: 20;
 }
 
 .navi-in a {
@@ -116,8 +120,7 @@ body {
 				</c:when>
 				<c:otherwise>
 				<label >${ loginUser.nickName }님 환영합니다</label>
-					<a href="mypage.member">마이페이지</a> | <a href="">경기장 대여 내역</a> | <a
-						href="logout.member">로그아웃 
+					<a href="mypage.member">마이페이지</a> | <a href="">경기장 대여 내역</a> | <a href="logout.member">로그아웃 </a>
 				</c:otherwise>
 			</c:choose>
 		</div>

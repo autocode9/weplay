@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="fieldMapper">
+
+	<resultMap type="field" id="fieldResultMap">
+		<result column="FIELD_NO" 	property="fieldNo" />
+		<result column="FIELD_NAME" property="fieldName" />
+		<result column="CITY" 		property="city" />
+		<result column="DISTRICT" 	property="district" />
+		<result column="GROUND" 	property="ground" />
+		<result column="WIDTH" 		property="width" />
+		<result column="LENGTH" 	property="length" />
+		<result column="BUILT_YEAR" property="builtYear" />
+	</resultMap>
+	
+	<select id="selectFields" resultMap="fieldResultMap">
+		SELECT
+		       FIELD_NO,
+			   FIELD_NAME,
+			   CITY,
+			   DISTRICT,
+			   GROUND,
+			   WIDTH,
+			   LENGTH,
+			   BUILT_YEAR
+	      FROM
+	           FIELD
+	     ORDER
+	        BY 
+	           FIELD_NO
+	</select>
+	
+</mapper>

@@ -64,7 +64,7 @@
 	
 	<jsp:include page="../common/header.jsp"/>
 	
-	<script src="resources/js/common/page.js"></script>
+	<script src="resources/js/common/pagination.js"></script>
 
     <div id="outer">
         <div id="search-area">

@@ -56,7 +56,7 @@
 
 	<jsp:include page="../common/header.jsp"/>
 	
-	<script src="resources/js/common/page.js"></script>
+	<script src="resources/js/common/pagination.js"></script>
 	
     <div id="outer">
         <div id="match-header">
@@ -149,7 +149,7 @@
 		
 			      <!-- Modal Header -->
 			    <div class="modal-header">
-				    <h4 class="modal-title">경기장 검색</h4>
+				    <h4 class="modal-title">팀 검색</h4>
 				    <button type="button" class="close" data-dismiss="modal">&times;</button>
 			    </div>
 			
@@ -280,7 +280,7 @@
     					}
     					const pageUl = pagination(pageInfo);
 						
-    					$('#page-area').html(pageUl);
+    					$('.page-area').html(pageUl);
     				}
     			}
     		});

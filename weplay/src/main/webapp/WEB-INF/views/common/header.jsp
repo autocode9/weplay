@@ -27,16 +27,17 @@ body {
 	font-size: 50px;
 	font-weight: 700;
 	margin-bottom: 40px; >
-	a {text-decoration: none;
-}
+	a {text-decoration: none;}
 
 }
 }
 #header-btn-area {
 	display: inline-block;
-	padding-left: 80%; > a { text-decoration : none;
-	color: white;
-}
+	padding-left: 75%; 
+	> a { 
+		text-decoration : none;
+		color: white;
+	}
 
 }
 #header-navibar>ul {
@@ -119,7 +120,7 @@ body {
 					<a href="loginForm.member">로그인</a>| <a href="enrollForm.member">회원가입</a>
 				</c:when>
 				<c:otherwise>
-				<label >${ loginUser.nickName }님 환영합니다</label>
+					<label >${ loginUser.nickName }님 환영합니다</label> <br>
 					<a href="mypage.member">마이페이지</a> | <a href="">경기장 대여 내역</a> | <a href="logout.member">로그아웃 </a>
 				</c:otherwise>
 			</c:choose>

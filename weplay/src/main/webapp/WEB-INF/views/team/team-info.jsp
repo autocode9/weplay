@@ -89,7 +89,7 @@
                 <h1 id="teamName">${ team.teamName }</h1>
                 
                 <c:if test="${ not empty loginUser and loginUser.teamNo eq team.teamNo }">
-                	<button class="btn btn-outline-primary">팀 페이지로 이동</button> <br>
+                	<button class="btn btn-outline-primary" onclick="goToTeamBoard()">팀 페이지로 이동</button> <br>
                	</c:if>
                	
                 <h3>${ team.teamRecord }</h3>
@@ -188,6 +188,14 @@
 		        }
 		    });
 		});
+		
+		//파라미터 그대로 바꾸기
+		const goToTeamBoard = () => {
+		    const currentUrl = window.location.href; // 현재 페이지의 URL 가져오기
+		    const newUrl = currentUrl.replace("teamInfo", "teamBoard.teamBoard"); // URL에서 teamInfo를 teamBoard.teamBoard로 변경
+		    window.location.href = newUrl; // 새로운 URL로 이동
+		};
+
 	</script>
 	
 </body>

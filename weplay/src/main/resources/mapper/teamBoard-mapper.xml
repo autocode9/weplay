@@ -20,15 +20,17 @@
 		FROM TEAM_BOARD TB
 		JOIN MEMBER M ON TB.MEMBER_NO = M.MEMBER_NO
 		WHERE TB.BOARD_CODE = #{boardCode}
+		ORDER BY createDate
 	
 	</select>
 
-	<insert id="insertTeamBoardBrg" parameterType="teamBoardBrg">
-INSERT INTO TEAM_BOARD (BOARD_NO,BOARD_CODE,MEMBER_NO,CONTENT)
+	<insert id="insertTeamBoard" parameterType="teamBoard">
+	INSERT INTO TEAM_BOARD (BOARD_NO,BOARD_CODE,MEMBER_NO,CONTENT)
 	 VALUES
 		(SEQ_TBNO.NEXTVAL, #{boardCode}, #{userNo} ,#{content})
 
 	</insert>
+
 
 
 

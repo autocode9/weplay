@@ -107,33 +107,36 @@
 
 			<table border="1" align="center">
 				<thead>
-				</thead>
+				<!-- 
+					<tr>
+						<th>223</th>
+						<td><textarea id="replyContent" cols="50" rows="3"
+								style="resize: none;"></textarea></td>
+						<td>24/05/17</td>
+					</tr>
+					 -->
+				<thead>
 				<tbody>
 					<tr>
-						
-						<th>
-							<select id="selBoardCode">
-								<c:forEach var="teamBoardBrg" items="${list}">
-						 		   <option value="${teamBoardBrg.boardCode}">${teamBoardBrg.boardName}</option>
-								</c:forEach>
-						    </select>
-						</th>
+						<th>${ loginUser.nickName }</th>
 						<c:choose>
 							<c:when test="${not empty sessionScope.loginUser }">
 								<td><textarea id="content" cols="50" rows="3"
 										style="resize: none;"></textarea></td>
-								<td><button class="btn btn-sm btn-primary" onclick="addteamBoard();">글 등록</button></td>
+								<td><button class="btn btn-sm btn-primary">글 등록</button></td>
 							</c:when>
 							<c:otherwise>
 								<td><textarea readonly cols="50" rows="3"
 										style="resize: none;">로그인 후 이용가능한 서비스입니다.</textarea></td>
-								<td><button  class="btn btn-sm btn-primary" >글 등록</button></td>
+								<td><button  class="btn btn-sm btn-primary" onclick="addteamBoard()">글 등록</button></td>
 
 							</c:otherwise>
 						</c:choose>
 					</tr>
 				</tbody>
+				<tbody>
 
+				</tbody>
 			</table>
 
 			<br> <br> <br> <br>
@@ -233,37 +236,6 @@
             }
         });
     }
-    // 팀 보드 추가
-    var userNo = "${sessionScope.loginUser.userNo}";
-    function addteamBoard() {
-        if ($('#content').val().trim() != '') {
-            $.ajax({
-                url: 'teamboardinsert',
-                data: {
-                    boardCode: $('#selBoardCode').val(),
-                    content: $('#content').val(),
-                    userNo: userNo
-                },
-                type: 'post',
-                success: function (result) {
-                    console.log(result);
-                    
-
-                    if (result === 'success') {
-                        $('#content').val('');
-                        alert("게시글이 성공적으로 등록되었습니다");
-                        location.reload();
-                    }
-                }
-
-            });
-        } else {
-            alert('경고');
-        }
-    }
-    //팀보드 재셀렉트
-    
 </script>
-	
 </body>
 </html>

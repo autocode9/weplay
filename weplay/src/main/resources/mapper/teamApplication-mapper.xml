@@ -11,6 +11,7 @@
 		<result column="TA.APPLY_DATE" property="applyDate" />
 		<result column="TA.STATUS" property="status" />
 		<result column="M.NICKNAME" property="nickName" />
+		<result column="T.TEAM_NAME" property="teamName" />
 	</resultMap>
 	
 	
@@ -34,16 +35,18 @@
 		(SEQ_TANO.NEXTVAL, #{ memberNo }, #{ teamNo }, #{ applyContent })
 	</insert>
 	
-	<select id="selectTeamApplication" parameterType="_int" resultMap="teamApplicationResultSet">
-	SELECT TA.APPLY_NO,
-		TA.MEMBER_NO,
-		TA.TEAM_NO,
-		TA.APPLY_CONTENT,
-		TA.APPLY_DATE,
-		TA.STATUS,
-		 M.NICKNAME
+	<select id="selectTeamApplication" parameterType="_int" resultType="TeamApplication">
+	SELECT TA.APPLY_NO applyNo,
+		TA.MEMBER_NO memberNo,
+		TA.TEAM_NO teamNo,
+		TA.APPLY_CONTENT applyContent,
+		TA.APPLY_DATE applyDate,
+		TA.STATUS status,
+		 M.NICKNAME nickName,
+		 T.TEAM_NAME teamName
 	FROM TEAM_APPLICATION TA
 	JOIN MEMBER M ON TA.MEMBER_NO = M.MEMBER_NO
+	JOIN TEAM T ON TA.TEAM_NO = T.TEAM_NO
 	WHERE TA.TEAM_NO = #{teamNo}
 	
 	</select>

@@ -60,7 +60,7 @@
 
 
 	<div class="outer">
-	<h2>팀 관리</h2>
+		<h2>팀 관리</h2>
 		<!-- Nav tabs -->
 		<ul class="nav nav-tabs">
 			<li class="nav-item"><a class="nav-link active"
@@ -72,64 +72,47 @@
 		</ul>
 
 		<!-- Tab panes -->
-			
+
 		<div class="tab-content">
 			<div class="tab-pane container active" id="home">
 				<table class="table table-bordered">
 					<thead>
-					<tr>
-						<td>이름</td>
-						<td>팀번호</td>
-						<td>신청글</td>
-						<td>신청일</td>
-						<td>상태</td>
-						<td>승인</td>
+						<tr>
+							<td>이름</td>
+							<td>팀이름</td>
+							<td>신청글</td>
+							<td>신청일</td>
+							<td>상태</td>
+							<td>승인</td>
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
-							<td>개똥이1</td>
-							<td>1</td>
-							<td>하이요1</td>
-							<td>20240515</td>
-							<td><select>
-									<option>Y</option>
-									<option>N</option>
-									<option>A</option>
-									<option>R</option>
-							</select></td>
-							<td><a style="cursor: pointer;">👌</a></td>
-						</tr>
-						<tr>
-							<td>개똥이2</td>
-							<td>1</td>
-							<td>하이요1</td>
-							<td>20240515</td>
-							<td>
-							<select>
-									<option>Y</option>
-									<option>N</option>
-									<option>A</option>
-									<option>R</option>
-							</select>
-							</td>
-							<td><a style="cursor: pointer;">👌</a></td>
-						</tr>
-						<tr>
-							<td>개똥이3</td>
-							<td>1</td>
-							<td>하이요1</td>
-							<td>20240515</td>
-							<td>
-							<select>
-								<option>Y</option>
-								<option>N</option>
-								<option>A</option>
-								<option>R</option>
-							</select>
-							</td>
-							<td><a style="cursor: pointer;">👌</a></td>
-						</tr>
+						<c:choose>
+						    <c:when test="${empty list}">
+						        <tr>
+						            <td colspan="6">내용 없음</td>
+						        </tr>
+						    </c:when>
+						    <c:otherwise>
+						        <c:forEach var="teamApplication" items="${list}">
+						            <tr>
+						                <td>${teamApplication.nickName}</td>
+						                <td>${teamApplication.teamName}</td>
+						                <td>${teamApplication.applyContent}</td>
+						                <td>${teamApplication.applyDate}</td>
+						                <td>
+						                    <select>
+						                        <option value="Y" <c:if test="${teamApplication.status eq 'Y'}">selected</c:if>>Y</option>
+						                        <option value="N" <c:if test="${teamApplication.status eq 'N'}">selected</c:if>>N</option>
+						                        <option value="A" <c:if test="${teamApplication.status eq 'A'}">selected</c:if>>A</option>
+						                        <option value="R" <c:if test="${teamApplication.status eq 'R'}">selected</c:if>>R</option>
+						                    </select>
+						                </td>
+						                <td><a style="cursor: pointer;" onclick="">👌</a></td>
+						            </tr>
+						        </c:forEach>
+						    </c:otherwise>
+						</c:choose>
 					</tbody>
 				</table>
 			</div>

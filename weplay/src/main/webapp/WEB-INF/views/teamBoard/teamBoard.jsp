@@ -100,73 +100,6 @@
 		</div>
 
 		<!-- 브릿지 ajax 스크립트 -->
-		<script>
-			//삭제 브릿지테이블
-			function delTeamBoardBrg(element) {
-				var boardCode = $(element).closest('tr').find('.boardCode').text();
-				$.ajax({
-					type : "post",
-					url : "deleteTeamBoardBrg",
-					data : {
-						boardCode : boardCode
-					},
-					success : function(response) {
-						if (response === 'success') {
-							alert("게시글이 삭제되었습니다.");
-							// 삭제된 항목을 화면에서 제거하는 코드를 추가하세요
-							$(element).closest('tr').remove();
-							location.reload();
-						} else {
-							// 실패 시 처리할 내용
-							alert("게시글 삭제에 실패했습니다.");
-						}
-					},
-					error : function(xhr, status, error) {
-						// 오류 발생 시 처리할 내용
-						console.error(xhr.responseText);
-						alert("서버 오류가 발생했습니다. 다시 시도해주세요.");
-					}
-				});
-			}
-
-			//삽입브릿지
-			function insertTeamBoardBrg() {
-				$.ajax({
-					type : "post",
-					url : "insertTeamBoardBrg",
-					data : {
-						teamNo : getParameterByName('teamNo'),
-						boardName : $('#boardBrgName').val()
-					},
-					success : function(response) {
-						// AJAX 요청 성공 시 처리할 내용
-						if (response === 'success') {
-							alert("게시글이 성공적으로 등록되었습니다");
-							location.reload();
-						} else {
-							alert("게시글 등록에 실패했습니다.");
-						}
-					},
-					error : function(xhr, status, error) {
-						// AJAX 요청 실패 시 처리할 내용
-						alert("AJAX 요청에 실패했습니다.");
-						console.error(xhr.responseText);
-					}
-				});
-			}
-
-			//파라미터 받아와서 teamNo넣기
-			function getParameterByName(name) {
-				name = name.replace(/[\[\]]/g, "\\$&");
-				var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"), results = regex
-						.exec(window.location.href);
-				if (!results)
-					return null;
-				if (!results[2])
-					return '';
-				return decodeURIComponent(results[2].replace(/\+/g, " "));
-			}
-		</script>
 
 
 		<div id="boardSelect-area">
@@ -209,66 +142,127 @@
 			<br> <br> <br> <br>
 		</div>
 	</div>
-	<script >
-			var boardCode;
-			
-			function selectTeamBoard(element){
-				var selectedBoardCode = $(element).closest('tr').find('.boardCode').text();
-				boardCode = selectedBoardCode;
-				$.ajax({
-					url : 'teamboardSelect',
-					data :{
-						boardCode : boardCode
-						},
-					success : function(result){
-						console.log(boardCode);
-						
-						let resultStr = '';
-						for(let i in result){
-							
-							resultStr += '<tr>'
-									   + '<td>' + result[i].nickName + '</td>'
-									   + '<td>' + result[i].content + '</td>'
-									   + '<td>' + result[i].createDate + '</td>'
-									   + '</tr>'
-						};
-						$('#boardSelect-area thead').html(resultStr);
-						
-					},
-					error : function(e){
-						console.log(e);
-					}
-					
-				});
-				
-			}
-			/*팀보드 인서트*/
-			
-				function addteamBoard(){
-		    	if($('#content').val().trim() != ''){
-		    		$.ajax({
-		    			url:'teamboardinsert',
-		    			data : {
-		    				boardCode : boardCode,
-		    				content : $('#content').val(),
-		    				userNo : ${sessionScope.loginUser.useNo}
-		    			},
-		    			type:'post',
-		    			success : function(result){
-		    				console.log(result);
-		    				
-		    				if(result ==='success'){
-		    					$('#conent').val('');
-		    				}
-		    			}
-		    			
-		    		});
-		    	}	
-		    	else{
-		    		alert('장난꾸러기야 장난치지마라')
-		    	}
-			}
-		
-	</script>
+	<script>
+    // 삭제 브릿지테이블
+    function delTeamBoardBrg(element) {
+        var boardCode = $(element).closest('tr').find('.boardCode').text();
+        $.ajax({
+            type: "post",
+            url: "deleteTeamBoardBrg",
+            data: {
+                boardCode: boardCode
+            },
+            success: function (response) {
+                if (response === 'success') {
+                    alert("게시글이 삭제되었습니다.");
+                    // 삭제된 항목을 화면에서 제거하는 코드를 추가하세요
+                    $(element).closest('tr').remove();
+                    location.reload();
+                } else {
+                    // 실패 시 처리할 내용
+                    alert("게시글 삭제에 실패했습니다.");
+                }
+            },
+            error: function (xhr, status, error) {
+                // 오류 발생 시 처리할 내용
+                console.error(xhr.responseText);
+                alert("서버 오류가 발생했습니다. 다시 시도해주세요.");
+            }
+        });
+    }
+
+    //삽입브릿지
+    function insertTeamBoardBrg() {
+        $.ajax({
+            type: "post",
+            url: "insertTeamBoardBrg",
+            data: {
+                teamNo: getParameterByName('teamNo'),
+                boardName: $('#boardBrgName').val()
+            },
+            success: function (response) {
+                // AJAX 요청 성공 시 처리할 내용
+                if (response === 'success') {
+                    alert("게시글이 성공적으로 등록되었습니다");
+                    location.reload();
+                } else {
+                    alert("게시글 등록에 실패했습니다.");
+                }
+            },
+            error: function (xhr, status, error) {
+                // AJAX 요청 실패 시 처리할 내용
+                alert("AJAX 요청에 실패했습니다.");
+                console.error(xhr.responseText);
+            }
+        });
+    }
+
+    // 파라미터 받아와서 teamNo 넣기
+    function getParameterByName(name) {
+        name = name.replace(/[\[\]]/g, "\\$&");
+        var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+            results = regex.exec(window.location.href);
+        if (!results)
+            return null;
+        if (!results[2])
+            return '';
+        return decodeURIComponent(results[2].replace(/\+/g, " "));
+    }
+
+    // 팀 보드 선택
+    function selectTeamBoard(element) {
+        var selectedBoardCode = $(element).closest('tr').find('.boardCode').text();
+        boardCode = selectedBoardCode;
+        $.ajax({
+            url: 'teamboardSelect',
+            data: {
+                boardCode: boardCode
+            },
+            success: function (result) {
+                console.log(boardCode);
+
+                let resultStr = '';
+                for (let i in result) {
+                    resultStr += '<tr>' +
+                        '<td>' + result[i].nickName + '</td>' +
+                        '<td>' + result[i].content + '</td>' +
+                        '<td>' + result[i].createDate + '</td>' +
+                        '</tr>';
+                }
+                $('#boardSelect-area thead').html(resultStr);
+            },
+            error: function (e) {
+                console.log(e);
+            }
+        });
+    }
+    // 팀 보드 추가
+    /*
+    function addteamBoard() {
+        if ($('#content').val().trim() != '') {
+            $.ajax({
+                url: 'teamboardinsert',
+                data: {
+                    boardCode: boardCode,
+                    content: $('#content').val(),
+                    userNo: ${sessionScope.loginUser.useNo}
+                },
+                type: 'post',
+                success: function (result) {
+                    console.log(result);
+
+                    if (result === 'success') {
+                        $('#content').val('');
+                    }
+                }
+
+            });
+        } else {
+            alert('장난꾸러기야 장난치지마라');
+        }
+    }
+*/
+</script>
+	
 </body>
 </html>

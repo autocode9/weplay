@@ -133,7 +133,7 @@ function pagination(pageInfo){ // 페이징 처리
   		pageUl.appendChild(moveLi);
     }
     
-    for(let i = 1; i <= pageInfo.endPage; i++){
+    for(let i = pageInfo.startPage; i <= pageInfo.endPage; i++){
   		
   	const pageLi = document.createElement('li');
     	if(i == pageInfo.currentPage){

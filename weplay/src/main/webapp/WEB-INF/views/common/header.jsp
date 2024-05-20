@@ -139,7 +139,7 @@ body {
 					<ul class="navi-in">
 						<li><a href="#">전체 경기</a></li>
 						<li><a href="#">My팀 경기</a></li>
-						<li><a href="#">경기 신청</a></li>
+						<li><a href="matchApplicationForm">경기 신청</a></li>
 						<li><a href="#">경기 신청 내역</a></li>
 						<li><a href="#">경기 기록(팀)</a></li>
 						<li><a href="#">경기 기록(개인)</a></li>

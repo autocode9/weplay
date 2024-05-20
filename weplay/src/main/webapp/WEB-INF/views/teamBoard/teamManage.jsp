@@ -83,7 +83,7 @@
 							<td>신청글</td>
 							<td>신청일</td>
 							<td>상태</td>
-							<td>승인</td>
+							<td>승인하기</td>
 						</tr>
 					</thead>
 					<tbody>
@@ -96,19 +96,20 @@
 						    <c:otherwise>
 						        <c:forEach var="teamApplication" items="${list}">
 						            <tr>
+						            	<td style="display: none;">${teamApplication.memberNo}</td>
 						                <td>${teamApplication.nickName}</td>
 						                <td>${teamApplication.teamName}</td>
 						                <td>${teamApplication.applyContent}</td>
 						                <td>${teamApplication.applyDate}</td>
 						                <td>
 						                    <select>
-						                        <option value="Y" <c:if test="${teamApplication.status eq 'Y'}">selected</c:if>>Y</option>
-						                        <option value="N" <c:if test="${teamApplication.status eq 'N'}">selected</c:if>>N</option>
-						                        <option value="A" <c:if test="${teamApplication.status eq 'A'}">selected</c:if>>A</option>
-						                        <option value="R" <c:if test="${teamApplication.status eq 'R'}">selected</c:if>>R</option>
+						                        <option value="Y" <c:if test="${teamApplication.status eq 'Y'}">selected</c:if>>신청중</option>
+						                        <option value="N" <c:if test="${teamApplication.status eq 'N'}">selected</c:if>>신청취소</option>
+						                        <option value="A" <c:if test="${teamApplication.status eq 'A'}">selected</c:if>>승낙</option>
+						                        <option value="R" <c:if test="${teamApplication.status eq 'R'}">selected</c:if>>거절</option>
 						                    </select>
 						                </td>
-						                <td><a style="cursor: pointer;" onclick="">👌</a></td>
+						                <td><a style="cursor: pointer;" onclick="come(this);">👌</a></td>
 						            </tr>
 						        </c:forEach>
 						    </c:otherwise>
@@ -122,7 +123,42 @@
 
 	</div>
 	<script>
+	
+		// 파라미터 받아와서 teamNo 넣기
+	    function getParameterByName(name) {
+	        name = name.replace(/[\[\]]/g, "\\$&");
+	        var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+	            results = regex.exec(window.location.href);
+	        if (!results)
+	            return null;
+	        if (!results[2])
+	            return '';
+	        return decodeURIComponent(results[2].replace(/\+/g, " "));
+	    }
+		  
+		  
+		function come(element){
+			
+			$.ajax({
+				url:'insertToTeamMember',
+				data : {
+					  teamNo: getParameterByName('teamNo'),
+					  memberNo: 
+				},
+				success: function(response){
+					if(response ==='success'){
+						alert("팀 영입 성공!");
+						
+					}else{
+						alert("실패")
+					}
+				}
+			});
+		}
+			
+			
 		
+	
 	</script>
 
 </body>

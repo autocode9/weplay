@@ -20,7 +20,7 @@
 		       SUB_POSITION subPosition,
 		       M.ENROLL_DATE enrollDate,
 			   UPDATE_DATE updateDate,
-			   TEAM_NO teamNo,
+			   NVL(TEAM_NO, 0) teamNo,
 			   MEMBER_TYPE memberType
 		  FROM
 		       MEMBER M

@@ -28,6 +28,7 @@
 	<jsp:include page="../common/header.jsp"/>
     
     <div id="outer">
+    	<input type="hidden" id="teamNo" value="${ loginUser.teamNo }">
         <div id="recieved-area">
             <h2>받은 경기 신청 내역</h2>
             <table class="table table-bordered table-hover">
@@ -103,15 +104,26 @@
     </div>
 	
 	<script>
+		var recievedLimit = 5;
+		var sentLimit = 5;
 		$(() => {
-			
+			getMatchApplications();
 		});
-		
-		function getMatchApplications(){
+		function getMatchApplications(boardLimit){
 			$.ajax({
-				
+				url : 'matchApp/getMatchApplications',
+				type : 'get',
+				data : {
+					teamNo : $('#teamNo').val(),
+					recievedLimit : recievedLimit,
+					sentLimit : sentLimit
+				},
+				success : result => {
+					console.log(result);
+				}
 			});
 		};
+		
 	</script>
 	
 	

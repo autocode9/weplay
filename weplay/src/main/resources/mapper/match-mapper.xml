@@ -28,5 +28,10 @@
 		 #{matchTime}, 
 		 TO_DATE(#{matchDate}, 'YYYY-MM-DD HH24:MI'))
 	</insert>
+	
+	<select id="getRecievedApplications" parameterType="_int">
+
+			  
+	</select>
 
 </mapper>

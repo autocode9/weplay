@@ -25,4 +25,6 @@ public class MatchApplication {
 	private String applyDate;
 	private String status;
 
+	private String opponentName;
+	private String applyInfo;
 }

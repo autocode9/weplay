@@ -184,7 +184,7 @@
 		    });
 		    $('.apply-match').click(() => {
 		        if(confirm($('#teamName').text() + '와의 경기를 신청하시겠습니까?')){
-		            location.href = 'matchApplicationForm';
+		            location.href = 'matchApplicationForm?awayTeamNo=' + $('#teamNo').val();
 		        }
 		    });
 		});

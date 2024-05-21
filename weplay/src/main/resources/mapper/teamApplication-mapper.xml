@@ -50,4 +50,11 @@
 	WHERE TA.TEAM_NO = #{teamNo}
 	</select>
 	
+	<update id="update" parameterType="teamApplication">
+		
+		update TEAM_APPLICATION
+        set STATUS =#{status}
+        where APPLY_NO= #{applyNo}
+	</update>
+	
 </mapper>

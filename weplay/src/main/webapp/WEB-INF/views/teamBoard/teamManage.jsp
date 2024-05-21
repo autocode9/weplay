@@ -83,39 +83,50 @@
 							<td>신청글</td>
 							<td>신청일</td>
 							<td>상태</td>
+							<td>저장하기</td>
 							<td>승인하기</td>
 						</tr>
 					</thead>
 					<tbody>
 						<c:choose>
-						    <c:when test="${empty list}">
-						        <tr>
-						            <td colspan="6">내용 없음</td>
-						        </tr>
-						    </c:when>
-						    <c:otherwise>
-						        <c:forEach var="teamApplication" items="${list}">
-						            <tr>
-						            	<td style="display: none;">${teamApplication.memberNo}</td>
-						                <td>${teamApplication.nickName}</td>
-						                <td>${teamApplication.teamName}</td>
-						                <td>${teamApplication.applyContent}</td>
-						                <td>${teamApplication.applyDate}</td>
-						                <td>
-						                    <select>
-						                        <option value="Y" <c:if test="${teamApplication.status eq 'Y'}">selected</c:if>>신청중</option>
-						                        <option value="N" <c:if test="${teamApplication.status eq 'N'}">selected</c:if>>신청취소</option>
-						                        <option value="A" <c:if test="${teamApplication.status eq 'A'}">selected</c:if>>승낙</option>
-						                        <option value="R" <c:if test="${teamApplication.status eq 'R'}">selected</c:if>>거절</option>
-						                    </select>
-						                </td>
+							<c:when test="${empty list}">
+								<tr>
+									<td colspan="6">내용 없음</td>
+								</tr>
+							</c:when>
+							<c:otherwise>
+								<c:forEach var="teamApplication" items="${list}">
+									<tr>
+										<td style="display: none;">${teamApplication.memberNo}</td>
+										<td style="display: none;">${teamApplication.applyNo}</td>
+										<td>${teamApplication.nickName}</td>
+										<td>${teamApplication.teamName}</td>
+										<td>${teamApplication.applyContent}</td>
+										<td>${teamApplication.applyDate}</td>
 										<td>
-										    <a style="cursor: pointer;" onclick="comeAndUpdate(this, '${teamApplication.status}')">👌</a>
+										<select>
+												<option value="Y"
+													<c:if test="${teamApplication.status eq 'Y'}">selected</c:if>>신청중</option>
+												<option value="N"
+													<c:if test="${teamApplication.status eq 'N'}">selected</c:if>>신청취소</option>
+												<option value="A"
+													<c:if test="${teamApplication.status eq 'A'}">selected</c:if>>승낙</option>
+												<option value="R"
+													<c:if test="${teamApplication.status eq 'R'}">selected</c:if>>거절</option>
+										</select>
 										</td>
+										<td>
+										    <a style="cursor: pointer;" onclick="update(this)">저장</a>
+										</td>
+										<td>
+										    <a style="cursor: pointer;" onclick="come(this)">🆗</a>
+										</td>
+										
 
-						            </tr>
-						        </c:forEach>
-						    </c:otherwise>
+
+									</tr>
+								</c:forEach>
+							</c:otherwise>
 						</c:choose>
 					</tbody>
 				</table>
@@ -139,47 +150,51 @@
 	        return decodeURIComponent(results[2].replace(/\+/g, " "));
 	    }
 		  
-		//두개함수 접근
-		
-	    function comeAndUpdate(element, status) {
-	        come(element, status);
-	        update(element, status);
-	    }
-  
-		
-		//삽입
-	    function come(element, status) {
-	        var teamNo = getParameterByName('teamNo');
-	        var memberNo = $(element).closest('tr').find('td:eq(0)').text(); // memberNo 값 가져오기
-	        var url = (status === 'A') ? 'insertToTeamMember' : 'justUpDate'; // A일 경우 insert, 그 외에는 update
-	        $.ajax({
-	            url: url,
-	            data: {
-	                teamNo: teamNo,
-	                memberNo: memberNo,
-	            },
-	            success: function(response) {
-	                if (response === 'success') {
-	                    alert("팀 영입 성공!");
-	                    // 여기서 선택한 행의 상태를 변경하거나 다시 로딩하는 등의 작업 수행
-	                } else {
-	                    alert("실패")
-	                }
-	            }
-	        });
-	    }
-	    
-	    //업데이트만
-	    function update(element, status) {
+
+	 // 삽입
+	    function come(element) {
 	        var teamNo = getParameterByName('teamNo');
 	        var memberNo = $(element).closest('tr').find('td:eq(0)').text(); // memberNo 값 가져오기
 	        var status = $(element).closest('tr').find('select').val(); // 선택된 상태 값 가져오기
 
+	        // A 상태인 경우 insertToTeamMember URL 사용
+	        if (status === 'A') {
+	            $.ajax({
+	                type: "post",
+	                url: 'insertToTeamMember',
+	                data: {
+	                    teamNo: teamNo,
+	                    memberNo: memberNo,
+	                },
+	                success: function(response) {
+	                    console.log("서버 응답:", response);
+	                    if (response) {
+	                        alert("팀 영입 성공!");
+	                        // 여기서 선택한 행의 상태를 변경하거나 다시 로딩하는 등의 작업 수행
+	                    } else {
+	                        alert("팀 영입 실패");
+	                    }
+	                },
+	                error: function(xhr, status, error) {
+	                    console.error("AJAX 오류 발생:", error);
+	                    alert("실패했습니다.");
+	                }
+	            });
+	        }
+	    }
+
+
+
+
+	    // 업데이트만
+	    function update(element) {
+	        var applyNo = $(element).closest('tr').find('td:eq(1)').text(); // 행의 두 번째 열에서 applyNo 가져오기
+	        var status = $(element).closest('tr').find('select').val(); // 선택된 상태 값 가져오기
 	        $.ajax({
+	            type: "post",
 	            url: 'updateTeamApplication',
 	            data: {
-	                teamNo: teamNo,
-	                memberNo: memberNo,
+	                applyNo: applyNo,
 	                status: status // 변경된 상태 값 서버로 전송
 	            },
 	            success: function(response) {
@@ -188,9 +203,13 @@
 	                    location.reload();
 	                    // 여기서 선택한 행의 상태를 변경하거나 다시 로딩하는 등의 작업 수행
 	                } else {
-	                    alert("실패");
+	                    alert("업뎃실패");
 	                }
-	            }
+	            },
+	            error: function(xhr, status, error) {
+                    console.error("AJAX 오류 발생:", error);
+                    alert("실패했습니다.");
+                }
 	        });
 	    }
 

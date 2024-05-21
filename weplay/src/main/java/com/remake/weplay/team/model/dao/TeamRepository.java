@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.remake.weplay.team.model.vo.Team;
 import com.remake.weplay.team.model.vo.TeamApplication;
+import com.remake.weplay.team.model.vo.TeamMember;
 
 @Repository
 public class TeamRepository {
@@ -36,5 +37,15 @@ public class TeamRepository {
 	public List<TeamApplication> selectTeamApplication(SqlSessionTemplate sqlSession, int teamNo) {
 		return sqlSession.selectList("teamApplicationMapper.selectTeamApplication", teamNo);
 	}
+	
+	//팀멤버 삽입
+	public int insertTeam(SqlSessionTemplate sqlSession, TeamMember teamMember) {
+		return sqlSession.insert("teamMemberMapper.insert",teamMember);
+	}
 
+	//팀신청자 업데이트
+	public int updateTeamApp(SqlSessionTemplate sqlSession, TeamApplication teamApp) {
+		System.out.println(sqlSession.update("teamApplicationMapper.update"));
+		return sqlSession.update("teamApplicationMapper.update",teamApp);
+	}
 }

@@ -7,6 +7,7 @@ import org.apache.ibatis.session.RowBounds;
 
 import com.remake.weplay.team.model.vo.Team;
 import com.remake.weplay.team.model.vo.TeamApplication;
+import com.remake.weplay.team.model.vo.TeamMember;
 
 public interface TeamService {
 
@@ -23,7 +24,8 @@ public interface TeamService {
 	//팀 신청자 목록
 	List<TeamApplication> selectTeamApplication(int teamNo);
 	
+	int insertTeam(TeamMember teamMember);
 	
-	
+	int updateTeamApp(TeamApplication teamApp);
 
 }

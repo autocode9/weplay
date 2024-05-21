@@ -23,8 +23,6 @@ public class ApproveTeamController {
 	@RequestMapping("approveList.do")
 	public String approveTeam(@RequestParam(value="teamNo")int teamNo,Model model) {
 		model.addAttribute("list", teamService.selectTeamApplication(teamNo));
-		System.out.println(teamNo);
-		System.out.println(teamService.selectTeamApplication(teamNo));
 		return "teamBoard/teamManage";
 	}
 	

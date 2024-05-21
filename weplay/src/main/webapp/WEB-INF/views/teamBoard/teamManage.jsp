@@ -109,7 +109,10 @@
 						                        <option value="R" <c:if test="${teamApplication.status eq 'R'}">selected</c:if>>거절</option>
 						                    </select>
 						                </td>
-						                <td><a style="cursor: pointer;" onclick="come(this);">👌</a></td>
+										<td>
+										    <a style="cursor: pointer;" onclick="comeAndUpdate(this, '${teamApplication.status}')">👌</a>
+										</td>
+
 						            </tr>
 						        </c:forEach>
 						    </c:otherwise>
@@ -136,25 +139,61 @@
 	        return decodeURIComponent(results[2].replace(/\+/g, " "));
 	    }
 		  
-		  
-		function come(element){
-			
-			$.ajax({
-				url:'insertToTeamMember',
-				data : {
-					  teamNo: getParameterByName('teamNo'),
-					  memberNo: 
-				},
-				success: function(response){
-					if(response ==='success'){
-						alert("팀 영입 성공!");
-						
-					}else{
-						alert("실패")
-					}
-				}
-			});
-		}
+		//두개함수 접근
+		
+	    function comeAndUpdate(element, status) {
+	        come(element, status);
+	        update(element, status);
+	    }
+  
+		
+		//삽입
+	    function come(element, status) {
+	        var teamNo = getParameterByName('teamNo');
+	        var memberNo = $(element).closest('tr').find('td:eq(0)').text(); // memberNo 값 가져오기
+	        var url = (status === 'A') ? 'insertToTeamMember' : 'justUpDate'; // A일 경우 insert, 그 외에는 update
+	        $.ajax({
+	            url: url,
+	            data: {
+	                teamNo: teamNo,
+	                memberNo: memberNo,
+	            },
+	            success: function(response) {
+	                if (response === 'success') {
+	                    alert("팀 영입 성공!");
+	                    // 여기서 선택한 행의 상태를 변경하거나 다시 로딩하는 등의 작업 수행
+	                } else {
+	                    alert("실패")
+	                }
+	            }
+	        });
+	    }
+	    
+	    //업데이트만
+	    function update(element, status) {
+	        var teamNo = getParameterByName('teamNo');
+	        var memberNo = $(element).closest('tr').find('td:eq(0)').text(); // memberNo 값 가져오기
+	        var status = $(element).closest('tr').find('select').val(); // 선택된 상태 값 가져오기
+
+	        $.ajax({
+	            url: 'updateTeamApplication',
+	            data: {
+	                teamNo: teamNo,
+	                memberNo: memberNo,
+	                status: status // 변경된 상태 값 서버로 전송
+	            },
+	            success: function(response) {
+	                if (response === 'success') {
+	                    alert("업데이트합니다");
+	                    location.reload();
+	                    // 여기서 선택한 행의 상태를 변경하거나 다시 로딩하는 등의 작업 수행
+	                } else {
+	                    alert("실패");
+	                }
+	            }
+	        });
+	    }
+
 			
 			
 		

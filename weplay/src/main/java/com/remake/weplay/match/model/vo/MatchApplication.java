@@ -18,6 +18,7 @@ public class MatchApplication {
 	private int fieldNo;
 	private String applyName;
 	private String applyPhone;
+	private String applyContent;
 	private String matchTime;
 	private String matchDate;
 	private String matchDateTime;

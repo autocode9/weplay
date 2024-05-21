@@ -16,14 +16,14 @@ public class TeamController {
 	
 	@GetMapping("allTeams")
 	public String forwardToAllTeams() {
-		return "team/all-teams";
+		return "team/allTeams";
 	}
 	
 	@GetMapping("teamInfo")
 	public ModelAndView forwardToTeamInfo(ModelAndView mv, int teamNo) {
 		Team team = teamService.selectTeam(teamNo);
 		if(team != null) {
-			mv.addObject("team", team).setViewName("team/team-info");
+			mv.addObject("team", team).setViewName("team/teamInfo");
 		} else {
 			mv.setViewName("redirect:/");
 		}

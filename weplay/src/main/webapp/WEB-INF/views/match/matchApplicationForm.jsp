@@ -78,7 +78,7 @@
 	        <div id="away-teamName"><h2><c:out value="${ awayTeam.teamName }" default="선택 안함" /></h2></div>
 	    </div>
 	    <button id="search-team-btn" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#teamModal">상대팀 검색</button>
-        <form action="" method="post" id="match-form">
+        <form action="applyMatch" method="post" id="match-form">
 	        <input type="hidden" id="home-team" name="homeTeam" value="${ homeTeam.teamNo }">
 	        <input type="hidden" id="away-team" name="awayTeam" value="${ awayTeam.teamNo }">
             <label for="matchDate">경기 희망일시 : </label>
@@ -99,21 +99,30 @@
             <span>정보 : </span><b id="fieldInfo">-- | --</b> <br>
             <br>
             <input type="hidden" name="memberNo" value="${ loginUser.userNo }">
-            <label for="applyName">신청자명 : </label><input type="text" name="applyName" id="applyName" placeholder="본명 입력" required> <br>
-            <label for="applyPhone">전화번호 : </label><input type="text" name="applyPhone" id="applyPhone" value="${ loginUser.phone }" placeholder="010-0000-0000" required> <br>
-            <textarea name="applyContent" placeholder="신청 사유 / 추가 정보를 입력해주세요. 100글자 이내"></textarea> <br>
+            <label for="applyName">신청자명 : </label>
+            <input type="text" name="applyName" id="applyName" placeholder="본명 입력" pattern="^[가-힣]{2,5}" title="한글 2글자에서 5글자로 입력해주세요." required> <br>
+            <label for="applyPhone">전화번호 : </label>
+            <input type="text" name="applyPhone" id="applyPhone" value="${ loginUser.phone }" placeholder="010-0000-0000" pattern="[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}" maxLength={13} title="'-'를 포함한 전화번호를 입력해주세요." required> <br>
+            <textarea name="applyContent" onkeyup="contentCheck(this);" placeholder="신청 사유 / 추가 정보를 입력해주세요. 최대 100글자"></textarea> <br>
             <br>
             <button type="button" onclick="history.back()" class="btn btn-secondary">취소</button>
             <button type="submit" class="btn btn-primary">신청</button>
         </form>
     </div>
     
-
-    
-    
-   
-	
-	
+	<script>
+		function contentCheck(content){
+			var regExp = /[\{\}\[\]\/;:|\)*`^\_<>\#$%\'\"\\\(\=]/gi; 
+	        if(regExp.test(content.value) ){
+	        	alert('특수문자는 입력하실 수 없습니다.');
+	        	content.value = content.value.substring( 0 , content.value.length - 1 ); 
+	        }
+	        if(content.value.length > 100){
+	        	alert('100글자 이상 입력하실 수 없습니다.');
+	        	content.value = content.value.substring( 0 , content.value.length - 1 ); 
+	        }
+		}
+	</script>
     
 </body>
 </html>

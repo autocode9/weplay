@@ -30,7 +30,6 @@ $(() => {
 	
 });
 
-
 function selectTeams(page){ // 팀 목록 조회	
 	$.ajax({
 		url : 'teams/' + page,

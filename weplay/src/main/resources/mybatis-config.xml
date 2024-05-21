@@ -17,6 +17,8 @@
 		<typeAlias type="com.remake.weplay.teamBoardBrg.model.vo.TeamBoardBrg" alias="teamBoardBrg"/>
 		<typeAlias type="com.remake.weplay.teamBoard.model.vo.TeamBoard" alias="teamBoard"/>
 		<typeAlias type="com.remake.weplay.field.model.vo.Field" alias="field"/>
+		<typeAlias type="com.remake.weplay.match.model.vo.Match" alias="match"/>
+		<typeAlias type="com.remake.weplay.match.model.vo.MatchApplication" alias="matchApplication"/>
 	</typeAliases>
 
 	<mappers>
@@ -27,5 +29,6 @@
 		<mapper resource="/mapper/teamBoardBrg-mapper.xml" />
 		<mapper resource="/mapper/teamBoard-mapper.xml" />
 		<mapper resource="/mapper/field-mapper.xml" />
+		<mapper resource="/mapper/match-mapper.xml" />
 	</mappers>
 </configuration>

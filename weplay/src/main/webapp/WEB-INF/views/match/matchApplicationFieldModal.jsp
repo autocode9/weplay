@@ -76,7 +76,6 @@
 			});
 			$('#fields-area tbody').on('click', '.chooseField', function() {
 				const $fieldTds = $(this).parent().parent().children();
-				console.log($fieldTds);
 				$('#fieldNo').val($fieldTds.eq(0).val());
 				$('#fieldName').text($fieldTds.eq(1).text());
 				$('#location').text($fieldTds.eq(2).text());

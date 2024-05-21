@@ -12,25 +12,32 @@ import com.remake.weplay.team.model.vo.TeamMember;
 @Controller
 public class AjaxTeamBoardController {
 
-	@Autowired TeamService teamService;
-	
+	@Autowired
+	TeamService teamService;
+
 	/***
 	 * 팀에삽입
+	 * 
 	 * @param teamMember
 	 * @return
 	 */
 	@ResponseBody
 	@PostMapping("insertToTeamMember")
 	public String ajaxInsertToTeamMember(TeamMember teamMember) {
-		return null;
+		return teamService.insertTeam(teamMember) > 0 ? "success" : "fail";
 	}
-	
+
+	/***
+	 * 팀 신청 업데이트
+	 * 
+	 * @param teamApplication
+	 * @return
+	 */
 	@ResponseBody
 	@PostMapping("updateTeamApplication")
-	public String ajaxUpdateTeamApplication(TeamApplication teamApplication) {
-		return null;
-		
+	public String ajaxUpdateTeamApplication(TeamApplication teamApp) {
+		return teamService.updateTeamApp(teamApp) > 0 ? "success" : "fail";
+
 	}
-	
-	
+
 }

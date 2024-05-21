@@ -12,6 +12,7 @@
 	<typeAliases>
 		<typeAlias type="com.remake.weplay.city.model.vo.City" alias="city"/>
 		<typeAlias type="com.remake.weplay.team.model.vo.Team" alias="team"/>
+		<typeAlias type="com.remake.weplay.team.model.vo.TeamMember" alias="teamMember"/>
 		<typeAlias type="com.remake.weplay.team.model.vo.TeamApplication" alias="teamApplication"/>
 		<typeAlias type="com.remake.weplay.member.model.vo.Member" alias="member"/>
 		<typeAlias type="com.remake.weplay.teamBoardBrg.model.vo.TeamBoardBrg" alias="teamBoardBrg"/>
@@ -30,5 +31,6 @@
 		<mapper resource="/mapper/teamBoard-mapper.xml" />
 		<mapper resource="/mapper/field-mapper.xml" />
 		<mapper resource="/mapper/match-mapper.xml" />
+		<mapper resource="/mapper/teamMember-mapper.xml" />
 	</mappers>
 </configuration>

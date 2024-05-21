@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.remake.weplay.team.model.dao.TeamRepository;
 import com.remake.weplay.team.model.vo.Team;
 import com.remake.weplay.team.model.vo.TeamApplication;
+import com.remake.weplay.team.model.vo.TeamMember;
 
 @Service
 public class TeamServiceImpl implements TeamService {
@@ -49,6 +50,16 @@ public class TeamServiceImpl implements TeamService {
 	@Override
 	public List<TeamApplication> selectTeamApplication(int teamNo) {
 		return teamRepository.selectTeamApplication(sqlSession, teamNo);
+	}
+
+	@Override
+	public int insertTeam(TeamMember teamMember) {
+		return teamRepository.insertTeam(sqlSession, teamMember);
+	}
+
+	@Override
+	public int updateTeamApp(TeamApplication teamApp) {
+		return teamRepository.updateTeamApp(sqlSession,teamApp);
 	}
 
 

@@ -26,5 +26,6 @@ public class MatchApplication {
 	private String status;
 
 	private String opponentName;
+	private String fieldName;
 	private String applyInfo;
 }

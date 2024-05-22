@@ -45,29 +45,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td colspan="6">받은 신청 내역이 없습니다.</td>
-                    </tr>
-                    <tr>
-                        <td>
-                        	<input type="hidden" class="applyNo">
-                        	<input type="hidden" class="homeTeamNo">
-                        	<a href="">리메이크 FC</a>
-                        </td>
-                        <td>
-                        	<input type="hidden" class="fieldNo">
-                        	<a href="">효창공원운동장</a>
-                        </td>
-                        <td>2024.06.08<br>16:00</td>
-                        <td>90분</td>
-                        <td><a href="">사용자2 | 이소룡</a><br>010-0000-0000</td>
-                        <td>경기합시다.</td>
-                        <td>2024.05.20</td>
-                        <td>
-                            <button class="btn btn-sm btn-success">승낙</button>
-                            <button class="btn btn-sm btn-danger">거절</button>
-                        </td>
-                    </tr>
+                    
                 </tbody>
             </table>
             <div class="more-btn-area">
@@ -135,58 +113,120 @@
 				success : result => {
 					console.log(result);
 					const recievedList = result.recievedList;
-					for(let i in recievedList){
-						const recievedTr = createRecievedTr(recievedList[i]);
-						$('#recieved-area tbody').append(recievedTr);
-					}
-					/*
 					const sentList = result.sentList;
-					for(let i in sentList){
-						createSentTr(result.sentList);
+					
+					if(recievedList.length == 0){
+						$('#recieved-area tbody').html('<tr><td colspan="6">받은 신청 내역이 없습니다.</td></tr>');
 					}
-					*/
+					else{
+						for(let i in recievedList){
+							const recievedTr = createRecievedTr(recievedList[i]);
+							$('#recieved-area tbody').append(recievedTr);
+						}
+					}
+					if(sentList.length == 0){
+						$('#sent-area tbody').html('<tr><td colspan="6">보낸 신청 내역이 없습니다.</td></tr>');
+					}
+					else{
+						for(let i in sentList){
+							const sentTr = createSentTr(result.sentList[i]);
+							$('#sent-area tbody').append(sentTr);
+						}
+					}
+
 				}
 			});
 		};
 		
-		function createRecievedTr(application){
+		function createRecievedTr(props){
 			
 			const tr = document.createElement('tr');
 			
-			const td1 = document.createElement('td');
+			const tds = [];
 			
-			const applyNo = document.createElement('input');
-			applyNo.setAttribute('type', 'hidden');
-			applyNo.setAttrubute('class', 'applyNo');
-			applyNo.setAttribute('value', application.applyNo);
-			td1.appendChild(applyNo);
+			for(let i = 0; i < 8; i++){
+				tds.push(document.createElement('td'));
+			}
 			
-			const teamNo = document.createElement('input');
-			teamNo.setAttribute('type', 'hidden');
-			teamNo.setAttrubute('class', 'homeTeamNo');
-			teamNo.setAttribute('value', application.homeTeam);
-			td1.appendChild(teamNo);
+			tds[0].innerHTML = '<input type="hidden" class="applyNo" value="' + props.applyNo + '">'
+        				 	 + '<input type="hidden" class="homeTeamNo" value="' + props.homeTeam + '">'
+        				  	 + '<a href="">' + props.opponentName + '</a>';
+
+			tds[1].innerHTML = '<input type="hidden" class="fieldNo" value="' + props.fieldNo + '">'
+	        			  	 + '<a href="">' + props.fieldName + '</a>';  
 			
-			const opponentName = document.createElement('a');
-			opponentName.setAttribute('href', '');
-			opponentName.innerText = application.opponentName;
-			td1.appendChild(opponentName);
+			tds[2].innerHTML = props.matchDate;
+
+			tds[3].innerHTML = props.matchTime;
+
+			tds[4].innerText = props.applyInfo;
 			
-			tr.appendChild(td1);
+			tds[5].innerHTML = props.applyContent;
+
+			tds[6].innerHTML = props.applyDate;
+
+			tds[7].innerHTML = '<button class="btn btn-sm btn-success accept">승낙</button>'
+            			  	 + '<button class="btn btn-sm btn-danger decline">거절</button>';
 			
-			const td2 = document.createElement('td');
-			const fieldNo = document.createElement('input');
-			fieldNo.setAttribute('class', 'fieldNo');
-			fieldNo.setAttribute('value', application.fieldNo);
-			td2.appendChild(fieldNo);
+			for(let i in tds){
+				tr.appendChild(tds[i]);
+			}
 			
-			const fieldName = document.createElement('a');
-			fieldName.setAttribute('href', '');
-			fieldName.innerText = application.fieldName;
-			td2.appendChild(fieldName);
+			return tr;
+		}
+		
+		function createSentTr(props){
+			/*
+			<tr>
+            <td>
+            	<input type="hidden" class="applyNo">
+            	<a href="">리메이크 FC</a>
+            </td>
+            <td><a href="">효창공원운동장</a></td>
+            <td>2024.06.08<br>16:00</td>
+            <td>90분</td>
+            <td><a href="">사용자2 | 이소룡</a><br>010-0000-0000</td>
+            <td>경기합시다.</td>
+            <td>2024.05.20</td>
+            <td>
+                <label class="status-y">신청중</label>
+                <button class="btn btn-sm btn-outline-danger">신청 취소</button>
+            </td>
+        	</tr>
+        	*/
+			const tr = document.createElement('tr');
 			
+			const tds = [];
 			
+			for(let i = 0; i < 8; i++){
+				tds.push(document.createElement('td'));
+			}
 			
+			tds[0].innerHTML = '<input type="hidden" class="applyNo" value="' + props.applyNo + '">'
+        				  	 + '<a href="">' + props.opponentName + '</a>';
+
+			tds[1].innerHTML = '<input type="hidden" class="fieldNo" value="' + props.fieldNo + '">'
+	        			  	 + '<a href="">' + props.fieldName + '</a>';  
+			
+			tds[2].innerHTML = props.matchDate;
+
+			tds[3].innerHTML = props.matchTime;
+
+			tds[4].innerText = props.applyInfo;
+			
+			tds[5].innerHTML = props.applyContent;
+
+			tds[6].innerHTML = props.applyDate;
+
+			tds[7].innerHTML = '<button class="btn btn-sm btn-success accept">승낙</button>'
+            			  	 + '<button class="btn btn-sm btn-danger decline">거절</button>';
+			
+			for(let i in tds){
+				tr.appendChild(tds[i]);
+			}
+			
+			return tr;
+        
 		}
 	</script>
 	

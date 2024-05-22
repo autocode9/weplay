@@ -73,6 +73,7 @@
 	<select id="getSentApplications" parameterType="_int" resultMap="matchAppResultMap">
 		SELECT
 		       APPLY_NO,
+		       AWAY_TEAM,
 		       TEAM_NAME AS OPPONENT_NAME,
 		       FIELD_NO,
 		       FIELD_NAME,

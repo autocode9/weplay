@@ -18,5 +18,6 @@ public class TeamMember {
 	private Date enrollDate;
 	private Date leaveDate;
 	private String status;
+	private String nickName;
 	
 }

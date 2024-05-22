@@ -66,9 +66,9 @@
 			<li class="nav-item"><a class="nav-link active"
 				data-toggle="tab" href="#home">신청</a></li>
 			<li class="nav-item"><a class="nav-link" data-toggle="tab"
-				href="#menu1">Menu 1</a></li>
+				href="#menu1">팀 인원</a></li>
 			<li class="nav-item"><a class="nav-link" data-toggle="tab"
-				href="#menu2">Menu 2</a></li>
+				href="#menu2">팀 삭제</a></li>
 		</ul>
 
 		<!-- Tab panes -->
@@ -121,9 +121,6 @@
 										<td>
 										    <a style="cursor: pointer;" onclick="come(this)">🆗</a>
 										</td>
-										
-
-
 									</tr>
 								</c:forEach>
 							</c:otherwise>
@@ -131,8 +128,44 @@
 					</tbody>
 				</table>
 			</div>
-			<div class="tab-pane container fade" id="menu1">...</div>
-			<div class="tab-pane container fade" id="menu2">...</div>
+			
+			
+			<div class="tab-pane container fade" id="menu1">
+				<table class="table table-bordered">
+					<thead>
+						<tr>
+							<td>회원번호</td>
+							<td>이름</td>
+							<td>회원등급</td>
+							<td>신청일</td>
+						</tr>
+					</thead>
+					<tbody>
+						<c:choose>
+							<c:when test="${empty memberList}">
+								<tr>
+									<td colspan="4">내용 없음</td>
+								</tr>
+							</c:when>
+							<c:otherwise>
+								<c:forEach var="teamMember" items="${memberList}">
+									<tr>
+										<td>${teamMember.memberNo}</td>
+										<td>${teamMember.nickName}</td>
+										<td>${teamMember.memberType}</td>
+										<td>${teamMember.enrollDate}</td>
+									</tr>
+								</c:forEach>
+							</c:otherwise>
+						</c:choose>
+					</tbody>
+				</table>
+			</div>
+			
+			
+			<div class="tab-pane container fade" id="menu2">
+			<button align="center";>팀 삭제하시겠습니까?</button>
+			</div>
 		</div>
 
 	</div>

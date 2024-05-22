@@ -45,7 +45,6 @@ public class TeamRepository {
 
 	//팀신청자 업데이트
 	public int updateTeamApp(SqlSessionTemplate sqlSession, TeamApplication teamApp) {
-		System.out.println(sqlSession.update("teamApplicationMapper.update"));
 		return sqlSession.update("teamApplicationMapper.update",teamApp);
 	}
 }

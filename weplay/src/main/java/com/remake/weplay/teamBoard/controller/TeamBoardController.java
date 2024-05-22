@@ -30,9 +30,6 @@ public class TeamBoardController {
 	@ResponseBody
 	@GetMapping(value="teamBoardSelect", produces="applcation/json; charset=UTF-8")
 	public String selectBoardList(int boardCode) {
-		System.out.println(boardCode);
-		
-		System.out.println(new Gson().toJson(teamBoardService.selectList(boardCode)));
 		
 		return new Gson().toJson(teamBoardService.selectList(boardCode));
 		
@@ -44,5 +41,7 @@ public class TeamBoardController {
 	public String insertBoard(TeamBoard teamBoard) {
 		return teamBoardService.insertTeamBoard(teamBoard)>0 ? "success" : "fail";
 	}
+	
+	
 	
 }
